@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ขั้นตอนทำสัยญา3</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">เลือกเกมสำหรับการเช่า</h3>
+      <div class="progress-bar">
+        <div class="progress-step">1</div>
+        <div class="progress-step">2</div>
+        <div class="progress-step active">3</div>
+        <div class="progress-step">4</div>
+        <div class="progress-step">5</div>
+        <div class="progress-step">6</div>
+      </div>
+
+      <form id="registrationForm">
+
+        <div class="form-group">
+            <label class="required">หมวดหมู่ธนาคาร</label>
+            <select required>
+                <option value="">เลือกหมวดหมู่</option>
+                <option value="krungthai">กรุงไทย</option>
+                <option value="scb">SCB</option>
+                <!-- เพิ่มธนาคารอื่น ๆ -->
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label class="required">ID เกม</label>
+            <select required>
+                <option value="">เลือก ID เกม</option>
+                <option value="game1">เกม 1</option>
+                <option value="game2">เกม 2</option>
+                <!-- เพิ่ม ID เกม -->
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label class="required">ชื่อเกม</label>
+            <select required>
+                <option value="">เลือกชื่อเกม</option>
+                <option value="game1">เกม 1</option>
+                <option value="game2">เกม 2</option>
+                <!-- เพิ่มชื่อเกม -->
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label class="required">โบนัสเหรียญฟรีที่ท่านจะได้รับ</label>
+            <select required>
+                <option value="">เลือกโบนัสเหรียญฟรี</option>
+                <option value="coins100">100 เหรียญ</option>
+                <option value="coins200">200 เหรียญ</option>
+                <!-- เพิ่มตัวเลือกโบนัสเหรียญ -->
+            </select>
+        </div>
+    
+        <div class="custom-button">เเบบร่างสัญญาเช่า</div>
+    
+        <div class="form-group">
+            <label class="required">วันที่เริ่มเช่า</label>
+            <input 
+                type="date"
+                required />
+        </div>
+    
+        <div class="form-group">
+            <label class="required">ระยะเวลาเช่าทั้งหมด (วัน)</label>
+            <input 
+                type="number"
+                placeholder="จำนวนวัน"
+                required />
+        </div>
+    
+        <div class="form-group">
+            <label class="required">วันที่ครบกำหนดสัญญา</label>
+            <input 
+                type="date"
+                required />
+        </div>
+    
+        <div class="form-group">
+            <label class="required">ค่าเช่าทั้งหมด (บาท)</label>
+            <input 
+                type="number"
+                placeholder="จำนวนเงิน"
+                required />
+        </div>
+    
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="required">จำนวนงวด</label>
+                    <input 
+                        type="number"
+                        placeholder="จำนวนงวด"
+                        required />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="required">ระยะเวลาแต่ละงวด (วัน)</label>
+                    <input 
+                        type="number"
+                        placeholder="จำนวนวัน"
+                        required />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label class="required">ค่าเช่าแต่ละงวด (บาท)</label>
+            <input 
+                type="number"
+                placeholder="จำนวนเงิน"
+                required />
+        </div>
+    
+        <div class="notice">
+            <p class="title">หมายเหตุ</p>
+            <p class="warning">***การชำระเงินไม่ครบถ้วนทางร้านขอสงวนสิทธิ์ในการยึดหลักประกัน***</p>
+            <p class="warning">***การชำระเงินล่าช้า ทางร้านขอสงวนสิทธิ์ในการเรียกเก็บค่าปรับ***</p>
+        </div>
+    
+        <div class="button-group">
+            <button type="submit" class="btn-submit">ยกเลิก</button>
+            <button type="button" class="btn-save">เจ้าหน้าที่</button>
+            <button type="button" class="btn-back">ถัดไป</button>
+        </div>
+    </form>
+    
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

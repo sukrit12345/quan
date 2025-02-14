@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ขั้นตอนทำสัญญา2</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">หลักประกัน</h3>
+      <div class="progress-bar">
+        <div class="progress-step">1</div>
+        <div class="progress-step active">2</div>
+        <div class="progress-step">3</div>
+        <div class="progress-step">4</div>
+        <div class="progress-step">5</div>
+        <div class="progress-step">6</div>
+      </div>
+      <form id="registrationForm" >
+
+        <div class="form-group">
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="property" value="apple" checked>
+                    <span class="custom-radio"></span>
+                    อุปกรณ์ Apple
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="property" value="other">
+                    <span class="custom-radio"></span>
+                    ทรัพย์สินอื่นๆ
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="property" value="none">
+                    <span class="custom-radio"></span>
+                    ไม่มีทรัพย์สิน
+                </label>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+          <label class="required">ประเภทอุปกรณ์</label>
+          <select required>
+            <option value="">เลือกประเภทอุปกรณ์</option>
+            <option value="iphone">iPhone</option>
+            <option value="ipad">iPad</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="required">รุ่นอุปกรณ์</label>
+          <select required>
+            <option value="">เลือกรุ่นอุปกรณ์</option>
+            <option value="13">iPhone 13</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="required">ความจุ</label>
+          <select required>
+            <option value="">เลือกความจุ</option>
+            <option value="256">256GB</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="required">สุขภาพแบตเตอรี่</label>
+          <input type="number" placeholder="ตัวอย่าง: 80" required />
+        </div>
+
+        <!-- ภาพถ่ายหน้าบัญชี Apple ID -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าบัญชี Apple ID</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer1"
+              onclick="document.getElementById('fileInput1').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput1"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage1"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- ภาพหน้าเกี่ยวกับ -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าเกี่ยวกับ</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer2"
+              onclick="document.getElementById('fileInput2').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput2"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage2"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- ภาพหน้าสุขภาพแบตเตอรี่ -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าสุขภาพแบตเตอรี่</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer3"
+              onclick="document.getElementById('fileInput3').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput3"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage3"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-submit">ยกเลิก</button>
+          <button type="button" class="btn-save">เจ้าหน้าที่</button>
+          <button type="button" class="btn-back">ถัดไป</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

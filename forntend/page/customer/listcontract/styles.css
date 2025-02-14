@@ -1,0 +1,140 @@
+* {
+    font-family: system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* การจัดตำแหน่ง Header */
+.header {
+    display: flex;
+    justify-content: center;  /* จัดให้ตรงกลาง */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.contract-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+
+.contract-table th {
+    padding: 12px;
+    font-size: 12px;
+    text-align: center;  /* Centers text horizontally */
+    vertical-align: middle;  /* Centers text vertically */
+    border-bottom: 1px solid #eee;
+}
+
+.contract-table td {
+    padding: 12px;
+    font-size: 12px;
+    text-align: center;  /* Centers text horizontally */
+    vertical-align: middle;  /* Centers text vertically */
+    border-bottom: 1px solid #eee;
+}
+
+.contract-table th {
+    font-weight: 500;
+    color: #666;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;  /* Centers text horizontally */
+    vertical-align: middle;  /* Centers text vertically */
+}
+
+.status-yellow {
+
+    color: #ffa000;
+}
+
+.status-green {
+
+    color: #2e7d32;
+}
+
+.status-red {
+
+    color: #c62828;
+}
+
+.status-blue {
+ 
+    color: #1565c0;
+}
+
+.status-purple {
+
+    color: #6a1b9a;
+}
+
+/* การจัดตำแหน่ง Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;  /* จัดให้ตรงกลาง */
+    gap: 8px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.page-item {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.page-item.active {
+    background: #1a237e;
+    color: white;
+    border-color: #1a237e;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .contract-table th, .contract-table td {
+        padding: 8px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-item {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+

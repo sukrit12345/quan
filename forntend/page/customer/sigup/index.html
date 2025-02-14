@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สมัครสมาชิก</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex justify-center items-center min-h-screen">
+      <div class="w-96 bg-white p-6 rounded-lg shadow-lg">
+        <img src="../../../assets/logo.svg" class="logo" />
+        <!-- Login Form -->
+        <h2 class="text-2xl font-bold text-center mb-4">สมัครสมาชิก</h2>
+
+        <!-- Store ID -->
+        <div class="relative mb-4">
+          <i
+            class="fas fa-id-card absolute left-3 top-3 text-gray-400 text-lg"
+          ></i>
+          <input
+            type="text"
+            placeholder="เลขบัตรประชาชน"
+            class="w-full px-10 py-2 border rounded-lg focus:outline-blue-400"
+          />
+        </div>
+
+        <!-- National ID -->
+        <div class="relative mb-4">
+          <i
+            class="fas fa-phone-alt absolute left-3 top-3 text-gray-400 text-lg"
+          ></i>
+          <input
+            type="text"
+            placeholder="เบอร์โทรศัพท์"
+            class="w-full px-10 py-2 border rounded-lg focus:outline-blue-400"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="relative mb-4">
+          <i
+            class="fas fa-envelope absolute left-3 top-3 text-gray-400 text-lg"
+          ></i>
+          <input
+            type="text"
+            placeholder="อีเมล"
+            class="w-full px-10 py-2 border rounded-lg focus:outline-blue-400"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="relative mb-4">
+          <i
+            class="fas fa-lock absolute left-3 top-3 text-gray-400 text-lg"
+          ></i>
+          <input
+            id="passwordInput"
+            type="password"
+            placeholder="รหัสผ่าน"
+            class="w-full px-10 py-2 border rounded-lg focus:outline-blue-400"
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            class="absolute right-3 top-3 text-gray-400"
+          >
+            <i class="fas fa-eye" id="eyeIcon" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Password -->
+        <div class="relative mb-4">
+          <i
+            class="fas fa-lock absolute left-3 top-3 text-gray-400 text-lg"
+          ></i>
+          <input
+            id="passwordInput"
+            type="password"
+            placeholder="ยืนยันรหัสผ่าน"
+            class="w-full px-10 py-2 border rounded-lg focus:outline-blue-400"
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            class="absolute right-3 top-3 text-gray-400"
+          >
+            <i class="fas fa-eye" id="eyeIcon" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          class="w-full bg-blue-600 text-white py-2 rounded-lg text-lg hover:bg-blue-700"
+        >
+          เข้าสู่ระบบ
+        </button>
+
+        <!-- Register Section -->
+        <div class="text-center text-sm mt-4 text-gray-600">
+          หรือ
+          <p>
+            คุณยังไม่มีบัญชีใช่ไหม?
+            <span class="text-blue-600 cursor-pointer">เข้าสู่ระบบ</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

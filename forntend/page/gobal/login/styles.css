@@ -1,0 +1,14 @@
+/* Custom Styles */
+.focus\:outline-blue-400:focus {
+  outline: 2px solid #60a5fa;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+button:focus {
+  outline: none;
+}
+.logo {
+  width: 100%; 
+  height: auto;
+}
