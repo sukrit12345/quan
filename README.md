@@ -1,10 +1,9 @@
-### Quantum
+# Quantum
 
 ## Introduction
 Quantum is a ???
 
 ## Inside React-Game
-# Contents
 This project includes:
 - **React**
 - **Tailwind CSS**
