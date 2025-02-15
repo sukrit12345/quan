@@ -1,12 +1,11 @@
-## Quantum
-# Introduction
+### Quantum
+
+## Introduction
 Quantum is a ???
 
-## Inside react-game
+## Inside React-Game
 # Contents
 This project includes:
 - **React**
 - **Tailwind CSS**
-- **Framer Motion**: Motion for React, an open-source, production-ready animation library.
-
-
+- **[Motion](https://motion.dev/docs/react-quick-start)**: Motion for React, an open-source, production-ready animation library.
