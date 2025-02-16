@@ -1,0 +1,132 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+}
+
+.container {
+    padding: 20px;
+    width: 340px;
+    overflow-y: auto; /* ให้มี scrollbar แนวตั้งเมื่อเนื้อหาเกิน */
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #f0f0f0;
+}
+
+input:not([readonly]) {
+  background: white;
+}
+
+input[type="file"] {
+  border: none;
+  padding: 5px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.cancel {
+  background: #E84143;
+  color: white;
+  margin-right: 10px;
+}
+
+.confirm {
+  background: #3D50DF;
+  color: white;
+}
+
+/*กำหนดฟิลด์d*/
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.required:after {
+  content: " *";
+  color: red;
+}
+/*กำหนดฟิลด์d*/
+
+/*รูป*/
+.form-group {
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+
+.upload-icon i {
+  color: gray; /* เปลี่ยนสีไอคอนเป็นสีเทา */
+  font-size: 30px; /* ปรับขนาดไอคอน */
+}
+
+.photo-upload {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.photo-upload input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.photo-upload .upload-text {
+  font-size: 16px;
+  color: #666;
+}
+
+.photo-upload .upload-icon {
+  font-size: 40px;
+  color: #1a73e8;
+  margin-bottom: 10px;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  display: none; /* ซ่อนรูปก่อนอัปโหลด */
+  object-fit: cover; /* ปรับภาพให้เต็ม */
+  display: none;
+}
+
+/*รูป*/

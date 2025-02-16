@@ -115,16 +115,19 @@
   .btn-submit {
     background: #dc3545;
     color: white;
+    font-size: 12px;
   }
   
   .btn-save {
     background: #ffc107;
     color: white;
+    font-size: 12px;
   }
   
   .btn-back {
     background: #0d6efd;
     color: white;
+    font-size: 12px;
   }
   
   .required:after {

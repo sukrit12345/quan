@@ -22,7 +22,6 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
 
 
-
 // สำหรับภาพถ่ายตรง
 document.getElementById('fileInput1').addEventListener('change', function(event) {
     const file = event.target.files[0];

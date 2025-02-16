@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <title>เกมของฉัน</title>
+
+</head>
+<body>
+  <div class="header">
+    <div class="title">เกมของฉัน</div>
+  </div>
+  
+  <div class="tab-container">
+    <div class="tab active" onclick="switchTab('all-games')">เกมทั้งหมด</div>
+    <div class="tab inactive" onclick="switchTab('rented-games')">เกมของฉัน</div>
+  </div>
+
+
+
+
+
+
+  
+  <!-- Rented Games Section -->
+  <div id="rented-games" class="content-section">
+
+    <div class="search-container">
+      <input type="text" class="search-box" placeholder="ชื่อเกม/ไอดีเกม">
+      <div class="search-icon"><i class="fas fa-search"></i></div>
+      
+      <div class="category-dropdown">
+        <button class="dropdown-btn" onclick="toggleCategoryDropdown()">
+          หมวดหมู่ <span>&#9662;</span>
+        </button>
+        <div id="categoryDropdownRented" class="dropdown-content">
+          <a href="#">ทั้งหมด</a>
+          <a href="#">Action</a>
+          <a href="#">Casino</a>
+          <a href="#">Adventure</a>
+          <a href="#">Puzzle</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="results-count">
+      <div>2 of 8 results</div>
+      <div class="filter-icon" onclick="toggleFilterMenuRented()">&#8801;</div>
+      <div id="filterMenuRented" class="filter-menu">
+        <div onclick="setResultsLimitRented(10)">แสดง 10 รายการ</div>
+        <div onclick="setResultsLimitRented(20)">แสดง 20 รายการ</div>
+        <div onclick="setResultsLimitRented(50)">แสดง 50 รายการ</div>
+        <div onclick="setResultsLimitRented(0)">แสดงทั้งหมด</div>
+      </div>
+    </div>
+    
+    <div class="game-grid">
+      <!-- Rented Game Card 1 -->
+      <div class="game-card">
+        <img src="/api/placeholder/223/100" class="game-image" alt="Poker game">
+        <div class="game-details">
+          <div class="game-title">Poker</div>
+          <div class="game-id">ID</div>
+          <div class="game-id">GAME001</div>
+          <div class="game-category-label">หมวดหมู่</div>
+          <div class="game-category">Casino</div>
+        </div>
+      </div>
+      
+      <!-- Rented Game Card 2 -->
+      <div class="game-card">
+        <img src="/api/placeholder/223/100" class="game-image" alt="Dragon fish game">
+        <div class="game-details">
+          <div class="game-title">Dragon fish</div>
+          <div class="game-id">ID</div>
+          <div class="game-category">GAME001</div>
+          <div class="game-category-label">หมวดหมู่</div>
+          <div class="game-category">Action</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-grid">
+        <!-- Rented Game Card 1 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Poker game">
+          <div class="game-details">
+            <div class="game-title">Poker</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Casino</div>
+          </div>
+        </div>
+        
+        <!-- Rented Game Card 2 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Dragon fish game">
+          <div class="game-details">
+            <div class="game-title">Dragon fish</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Action</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="game-grid">
+        <!-- Rented Game Card 1 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Poker game">
+          <div class="game-details">
+            <div class="game-title">Poker</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Casino</div>
+          </div>
+        </div>
+        
+        <!-- Rented Game Card 2 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Dragon fish game">
+          <div class="game-details">
+            <div class="game-title">Dragon fish</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Action</div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="game-grid">
+        <!-- Rented Game Card 1 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Poker game">
+          <div class="game-details">
+            <div class="game-title">Poker</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Casino</div>
+          </div>
+        </div>
+        
+        <!-- Rented Game Card 2 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Dragon fish game">
+          <div class="game-details">
+            <div class="game-title">Dragon fish</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Action</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <!-- Rented Game Card 1 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Poker game">
+          <div class="game-details">
+            <div class="game-title">Poker</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Casino</div>
+          </div>
+        </div>
+        
+        <!-- Rented Game Card 2 -->
+        <div class="game-card">
+          <img src="/api/placeholder/223/100" class="game-image" alt="Dragon fish game">
+          <div class="game-details">
+            <div class="game-title">Dragon fish</div>
+            <div class="game-id">ID</div>
+            <div class="game-id">GAME001</div>
+            <div class="game-category-label">หมวดหมู่</div>
+            <div class="game-category">Action</div>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  <script src="scripts.js"></script>
+</body>
+</html>

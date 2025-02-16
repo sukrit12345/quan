@@ -15,7 +15,6 @@
     background: white;
     padding: 20px;
     border-radius: 8px;
-
   }
   
   .progress-bar {
@@ -116,16 +115,19 @@
   .btn-submit {
     background: #dc3545;
     color: white;
+    font-size: 12px;
   }
   
   .btn-save {
     background: #ffc107;
     color: white;
+    font-size: 12px;
   }
   
   .btn-back {
     background: #0d6efd;
     color: white;
+    font-size: 12px;
   }
   
   .required:after {
@@ -133,39 +135,80 @@
     color: red;
   }
   
-  .custom-button {
-    background-color: #1e237e; /* สีน้ำเงินเข้ม */
-    color: white; /* สีข้อความ */
-    border: none; /* ไม่มีขอบ */
-    border-radius: 5px; /* ทำให้ขอบมน */
-    padding: 8px 15px; /* ระยะห่างภายในปุ่ม */
-    font-size: 16px; /* ขนาดตัวอักษร */
-    width: 100%; /* กว้างเท่ากับ container */
-    text-align: left; /* จัดข้อความให้อยู่ทางซ้าย */
-    display: inline-block; /* จัดตำแหน่งให้เหมือนปุ่ม */
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-
-  .notice {
-    max-width: 600px;
-    margin: 20px auto;
+  .upload-icon i {
+    color: gray; /* เปลี่ยนสีไอคอนเป็นสีเทา */
+    font-size: 30px; /* ปรับขนาดไอคอน */
   }
   
-  .title {
+  .preview-image {
+    width: 100%;
+    height: 100%;
+    display: none; /* ซ่อนรูปก่อนอัปโหลด */
+    object-fit: cover; /* ปรับภาพให้เต็ม */
+    display: none;
+  }
+  .contract-container {
+    background: white;
+    height: 600px;
+    padding: 20px;
+    margin-top: -40px;
+    border-radius: 10px;
+    
+}
+
+.contract-title {
     font-size: 16px;
-    color: #333; /* สีข้อความเข้ม */
-    font-weight: bold; /* ตัวหนา */
-    text-align: center; /* จัดข้อความให้ตรงกลาง */
+    font-weight: bold;
     margin-bottom: 10px;
-  }
-  
-  .warning {
+}
+
+.contract-box {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    height: 480px;
+    overflow-y: auto;
     font-size: 14px;
-    color: #d9534f; /* สีแดงเข้ม */
-    font-weight: bold; /* ตัวหนา */
-    margin: 10px 0;
-    text-align: center; /* จัดข้อความให้ตรงกลาง */
-  }
-  
+    line-height: 1.6;
+    color: #333;
+    
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+}
+
+.checkbox-container input:checked + .checkmark {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.checkbox-container input:checked + .checkmark::after {
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
