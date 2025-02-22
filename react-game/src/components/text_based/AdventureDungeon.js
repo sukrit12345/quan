@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Import character sprites for the status panel
-import BoyCat from '../character_sprites/BoyCat';
-import GirlCat from '../character_sprites/GirlCat';
-
 // Game components
 import CharacterCreation from './CharacterCreation';
 import GameBoard from './GameBoard';
@@ -16,6 +12,10 @@ import monsters from '../../data/textbased/monsters';
 import treasures from '../../data/textbased/treasures';
 import events from '../../data/textbased/events';
 
+// Sound Effect
+import useSound from 'use-sound';
+import diceSound from '../../assets/sfx/dice.mp3';
+
 const AdventureDungeon = () => {
   // Game state and player state definitions
   const [gameState, setGameState] = useState('characterCreation'); // characterCreation, playing, shop, inventory, gameOver
@@ -26,6 +26,16 @@ const AdventureDungeon = () => {
   const [purchasedItems, setPurchasedItems] = useState([]);
   const [premiumCurrency, setPremiumCurrency] = useState(0);
   const [dialogueText, setDialogueText] = useState(""); // Dialogue text for events
+
+// Add these new state variables in AdventureDungeon
+const [currentEvent, setCurrentEvent] = useState(null);
+const [diceResult, setDiceResult] = useState(null);
+const [playerChoice, setPlayerChoice] = useState(null);
+
+
+// SFX
+const [playDiceSound] = useSound(diceSound);
+
 
   // Create a new player
   const createPlayer = (name, gender) => {
@@ -70,55 +80,85 @@ const AdventureDungeon = () => {
     return { type: 'encounter', ...encounter };
   };
 
-  const getRestArea = () => {
-    return {
-      type: 'rest',
-      name: 'จุดพัก',
-      description: 'สถานที่ปลอดภัยสำหรับฟื้นฟูพลังงาน',
-      healthRecovery: 20,
-    };
-  };
+  const getRestArea = () => ({
+    type: 'rest',
+    name: 'จุดพัก',
+    description: 'สถานที่ปลอดภัยสำหรับฟื้นฟูพลังงาน',
+    healthRecovery: 20,
+  });
 
   // Handle direction choices and events after selection
   const chooseDirection = (direction) => {
     setCurrentRoom(currentRoom + 1);
     const event = generateEvent();
+    setCurrentEvent(event);
+    setPlayerChoice(null);
+    setDiceResult(null);
+  };
+  const handleEventChoice = (choice) => {
+    setPlayerChoice(choice);
+    if (choice === "fight" || choice === "escape") {
+      const result = Math.floor(Math.random() * 6) + 1;
+      playDiceSound();
+      setDiceResult(result);
+      resolveEvent(choice, result);
+    }
+
+    console.log("AdD choice: " + choice);
+  };
+  
+  
+  const resolveEvent = (choice, result) => {
     let message = "";
-
-    if (event.type === 'monster') {
-      if (Math.random() < 0.7) {
-        setScore(score + 50);
-        setPlayer({ ...player, gold: player.gold + event.gold });
-        message = `คุณเผชิญหน้ากับ ${event.name}! คุณชนะและได้รับทอง ${event.gold} เหรียญ`;
-      } else {
-        setPlayer({ ...player, health: player.health - 20 });
-        message = `คุณถูก ${event.name} โจมตี! คุณเสีย 20 HP`;
+    
+    if (currentEvent.type === 'monster') {
+      const difficulty = currentEvent.difficult;
+      if (choice === 'fight') {
+        if (result > difficulty) {
+          message = `ชนะ! ได้รับ ${currentEvent.gold} ทอง`;
+          setPlayer(p => ({ ...p, gold: p.gold + currentEvent.gold }));
+        } else {
+          // Use player instead of p
+          const damage = Math.max(1, currentEvent.attack - player.defense);
+          message = `แพ้! เสีย HP ${damage}`;
+          setPlayer(p => ({ ...p, health: p.health - damage }));
+        }
+      } else { // escape
+        if (result > difficulty) {
+          message = "หนีสำเร็จ!";
+        } else {
+          // Use player instead of p
+          const loss = Math.floor(currentEvent.gold * 0.3);
+          message = `หนีไม่สำเร็จ! เสียทอง ${loss}`;
+          setPlayer(p => ({ ...p, gold: Math.max(0, p.gold - loss) }));
+        }
       }
-    } else if (event.type === 'treasure') {
-      setScore(score + 150);
-      setInventory([...inventory, event]);
-      message = `คุณพบสมบัติ: ${event.name}. ${event.description}`;
-    } else if (event.type === 'encounter') {
-      if (Math.random() < 0.5) {
-        setPremiumCurrency(premiumCurrency + 1);
-        message = `บุคคลลึกลับมอบคริสตัลพิเศษให้คุณ 1 เม็ด!`;
-      } else {
-        message = `คุณไม่พบเหตุการณ์สำคัญใดๆ และเดินหน้าต่อไป`;
-      }
-    } else if (event.type === 'rest') {
-      setPlayer({
-        ...player,
-        health: Math.min(player.maxHealth, player.health + event.healthRecovery),
-      });
-      message = `คุณพบจุดพักและฟื้นฟูพลังชีวิต ${event.healthRecovery} HP`;
     }
-
-    setDialogueText(message);
-
+    else if (currentEvent.type === 'encounter') {
+      if (choice === 'trust') {
+        if (result > 10) {
+          const heal = 20;
+          message = `ได้รับอาหาร! ฟื้น HP ${heal}`;
+          setPlayer(p => ({ ...p, health: Math.min(p.maxHealth, p.health + heal) }));
+        } else {
+          // Use player instead of p
+          const stolen = Math.floor(player.gold * 0.5);
+          message = `ถูกขโมย! เสียทอง ${stolen}`;
+          setPlayer(p => ({ ...p, gold: p.gold - stolen }));
+        }
+      } else { // distrust
+        if (result > 15) {
+          message = "ปลอดภัย แต่เสียโอกาส";
+        } else {
+          message = "หลบหนีสำเร็จ!";
+        }
+      }
+    }
+    
     if (player.health <= 0) {
-      setGameState('gameOver');
-      setDialogueText("คุณพ่ายแพ้ในการต่อสู้... เกมโอเวอร์!");
+      setGameState("gameOver");
     }
+    setDialogueText(message);
   };
 
   // In-app purchase for premium currency
@@ -159,9 +199,14 @@ const AdventureDungeon = () => {
         <GameBoard
           currentRoom={currentRoom}
           dialogueText={dialogueText}
+          premiumCurrency={premiumCurrency}
+          player={player}
+          event={currentEvent || {}} // Provide fallback empty object
+          diceResult={diceResult} // Only diceResult remains
           onChooseDirection={chooseDirection}
           onOpenShop={() => setGameState('shop')}
           onOpenInventory={() => setGameState('inventory')}
+          onChoice={handleEventChoice}
         />
       )}
 
@@ -190,22 +235,7 @@ const AdventureDungeon = () => {
         />
       )}
 
-      {/* New Fixed Status Panel in Bottom Left */}
-      {player && (
-        <div className="fixed bottom-4 left-4 p-4 flex items-center space-x-4 bg-white bg-opacity-80 rounded shadow-lg">
-          {player.gender === 'woman' ? (
-            <GirlCat width="70" height="100" className="character-display" />
-          ) : (
-            <BoyCat width="70" height="100" className="character-display" />
-          )}
-          <div className="text-sm text-gray-900">
-            <p>{player.name} ({player.gender === 'woman' ? 'หญิง' : 'ชาย'}) - เลเวล {player.level}</p>
-            <p>HP: {player.health}/{player.maxHealth}</p>
-            <p>ทอง: {player.gold}</p>
-            <p>คริสตัล: {premiumCurrency}</p>
-          </div>
-        </div>
-      )}
+
 
     </div>
   );
