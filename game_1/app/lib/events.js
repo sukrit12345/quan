@@ -1,3 +1,4 @@
+// rout app/lib/event
 const generateEvents = () => {
     const events = [];
   
