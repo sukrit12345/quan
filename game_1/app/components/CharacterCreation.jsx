@@ -21,7 +21,7 @@ export default function CharacterCreation({ onStartGame }) {
   };
 
   const handleStartGame = () => {
-    if (!character.name.trim()) return alert("Enter a name!");
+    if (!character.name.trim()) return alert("กรุณากรอกชื่อของคุณ!");
     onStartGame(character);
   };
 
@@ -47,7 +47,7 @@ export default function CharacterCreation({ onStartGame }) {
         <div className="p-4 space-y-4">
           {/* Header */}
           <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 text-center">
-            Create Your Character
+            สร้างตัวละครของคุณ
           </h1>
 
           {/* Character Preview */}
@@ -66,7 +66,7 @@ export default function CharacterCreation({ onStartGame }) {
             <input
               type="text"
               name="name"
-              placeholder="Enter Your Name"
+              placeholder="กรอกชื่อของคุณ"
               value={character.name}
               onChange={handleChange}
               className="w-full py-2 px-3 text-base text-black rounded-lg border-2 border-gray-600 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/50 text-center bg-white/90 placeholder-gray-500"
@@ -75,20 +75,23 @@ export default function CharacterCreation({ onStartGame }) {
 
           {/* Gender Selection */}
           <div className="flex gap-2 justify-center">
-            {["male", "female"].map((sex) => (
+            {[
+              { key: "male", label: "ชาย" },
+              { key: "female", label: "หญิง" },
+            ].map(({ key, label }) => (
               <motion.button
-                key={sex}
+                key={key}
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                onClick={() => setCharacter({ ...character, sex })}
+                onClick={() => setCharacter({ ...character, sex: key })}
                 className={`flex-1 py-2 px-4 text-base font-semibold rounded-lg transition-all ${
-                  character.sex === sex 
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg" 
+                  character.sex === key
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
                     : "bg-gray-700 text-gray-300 hover:bg-gray-600"
                 }`}
               >
-                {sex.charAt(0).toUpperCase() + sex.slice(1)}
+                {label}
               </motion.button>
             ))}
           </div>
@@ -97,7 +100,9 @@ export default function CharacterCreation({ onStartGame }) {
           <div className="grid grid-cols-1 gap-4">
             {/* Skin Tone Selection */}
             <div className="space-y-2">
-              <label className="block text-base font-medium text-gray-200">Skin Tone</label>
+              <label className="block text-base font-medium text-gray-200">
+                สีผิว
+              </label>
               <div className="flex justify-center gap-2">
                 {["#FFD1DC", "#F5CBA7", "#E6B8A2", "#D2B48C"].map((color) => (
                   <motion.button
@@ -107,8 +112,8 @@ export default function CharacterCreation({ onStartGame }) {
                     whileTap="tap"
                     onClick={() => setCharacter({ ...character, skinTone: color })}
                     className={`w-8 h-8 rounded-full border-2 transition-all ${
-                      character.skinTone === color 
-                        ? "border-white shadow-lg scale-110" 
+                      character.skinTone === color
+                        ? "border-white shadow-lg scale-110"
                         : "border-gray-600 hover:border-gray-400"
                     }`}
                     style={{ backgroundColor: color }}
@@ -119,7 +124,9 @@ export default function CharacterCreation({ onStartGame }) {
 
             {/* Shirt Color Selection */}
             <div className="space-y-2">
-              <label className="block text-base font-medium text-gray-200">Shirt Color</label>
+              <label className="block text-base font-medium text-gray-200">
+                สีเสื้อ
+              </label>
               <div className="flex justify-center gap-2">
                 {["#FFB6C1", "#90EE90", "#87CEEB", "#DDA0DD"].map((color) => (
                   <motion.button
@@ -129,8 +136,8 @@ export default function CharacterCreation({ onStartGame }) {
                     whileTap="tap"
                     onClick={() => setCharacter({ ...character, shirtColor: color })}
                     className={`w-8 h-8 rounded-full border-2 transition-all ${
-                      character.shirtColor === color 
-                        ? "border-white shadow-lg scale-110" 
+                      character.shirtColor === color
+                        ? "border-white shadow-lg scale-110"
                         : "border-gray-600 hover:border-gray-400"
                     }`}
                     style={{ backgroundColor: color }}
@@ -147,12 +154,12 @@ export default function CharacterCreation({ onStartGame }) {
             whileTap="tap"
             onClick={toggleGlasses}
             className={`w-full py-2 px-4 text-base font-semibold rounded-lg transition-all ${
-              character.glasses 
-                ? "bg-gradient-to-r from-green-500 to-green-600" 
+              character.glasses
+                ? "bg-gradient-to-r from-green-500 to-green-600"
                 : "bg-gray-700 hover:bg-gray-600"
             }`}
           >
-            {character.glasses ? "✅ Wearing Glasses" : "🕶️ Add Glasses"}
+            {character.glasses ? "✅ ใส่แว่นแล้ว" : "🕶️ เพิ่มแว่นตา"}
           </motion.button>
 
           {/* Start Game Button */}
@@ -163,7 +170,7 @@ export default function CharacterCreation({ onStartGame }) {
             onClick={handleStartGame}
             className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-lg font-bold text-lg shadow-lg transition-all"
           >
-            Start Your Journey 🚀
+            เริ่มต้นการเดินทาง 🚀
           </motion.button>
         </div>
       </motion.div>

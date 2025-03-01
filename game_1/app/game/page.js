@@ -1,4 +1,3 @@
-// rout app/game/page
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,77 +6,127 @@ import StatusPanel from "../components/StatusPanel";
 import CharacterPreview from "../components/CharacterPreview";
 import CharacterCreation from "../components/CharacterCreation";
 import ResultPopup from "../components/ResultPopup";
+import Shop from "../components/Shop";
+import GameOver from "../components/GameOver"; // Import the GameOver component
 
 export default function GamePage() {
   const [character, setCharacter] = useState(null);
   const [ageIndex, setAgeIndex] = useState(0);
   const [status, setStatus] = useState({
-    happiness: 50,
-    relationship: 50,
-    health: 100,
-    money: 1000,
-    knowledge: 10,
-    lucky: 50,
+    health: 100, // Percent
+    happiness: 50, // Percent
+    money: 1000.0, // Currency
+    iq: 150, // IQ
+    lucky: 50, // Max 100
   });
+
   const [deathReason, setDeathReason] = useState("");
   const [isStatusOpen, setIsStatusOpen] = useState(false);
-  const [selectedChoices, setSelectedChoices] = useState([]);
+  const [currentEvent, setCurrentEvent] = useState(null);
+  const [currentChoices, setCurrentChoices] = useState([]);
+
+  // for shop popup
+  const [isShopOpen, setIsShopOpen] = useState(false);
 
   // Add new state for result popup
   const [showResult, setShowResult] = useState(false);
   const [currentResult, setCurrentResult] = useState({ text: "", achievement: "" });
 
-  const currentAge = events[ageIndex]?.age || 100;
-  const eventChoices = events[ageIndex]?.choices[character?.sex || "male"] || [];
+  // Get current age based on ageIndex
+  const currentAge = ageIndex + 1;
 
+  // Load appropriate event for current age and gender
   useEffect(() => {
     if (character) {
-      const shuffledChoices = [...eventChoices].sort(() => Math.random() - 0.5);
-      setSelectedChoices(shuffledChoices.slice(0, 2));
+      // Filter events that match current age and gender
+      const filteredEvents = events.filter(
+        (event) => event.withAge === currentAge && event.gender === character.sex
+      );
+
+      // Select a random event from filtered events
+      if (filteredEvents.length > 0) {
+        const randomEvent = filteredEvents[Math.floor(Math.random() * filteredEvents.length)];
+        setCurrentEvent(randomEvent);
+        setCurrentChoices(randomEvent.choices);
+      } else {
+        console.log("No event found for age:", currentAge, "and gender:", character.sex);
+        // If we've reached the end of available events
+        if (currentAge > 5) {
+          setDeathReason("ถึงวัยชราและจากโลกนี้ไปอย่างสงบ");
+        }
+      }
     }
-  }, [ageIndex, character]);
+  }, [ageIndex, character, currentAge]);
 
   const handleChoice = (effects, choiceText) => {
     const newStatus = { ...status };
+
+    // Update all possible status attributes
     Object.keys(effects).forEach((key) => {
-      newStatus[key] = (newStatus[key] || 0) + effects[key];
+      if (newStatus[key] !== undefined) {
+        newStatus[key] += effects[key];
+
+        // Ensure values stay within reasonable bounds
+        if (key === "happiness" || key === "lucky" || key === "money" || key === "iq") {
+          newStatus[key] = Math.max(0, Math.min(100, newStatus[key]));
+        }
+      }
     });
 
     // Set the result text and any achievements
-    let resultText = effects.result || `You chose to ${choiceText.toLowerCase()}.`;
+    let resultText = effects.result || `คุณเลือกที่จะ${choiceText}`;
     let achievement = "";
 
     // Check for special achievements based on effects
-    if (effects.happiness && effects.happiness > 10) {
-      achievement = "Achievement: Extremely Happy! 🌟";
-    } else if (effects.lucky && effects.lucky > 10) {
-      achievement = "Achievement: Super Lucky! 🍀";
+    if (effects.happiness && effects.happiness > 8) {
+      achievement = "Achievement: ความสุขล้นเหลือ! 🌟";
+    } else if (effects.lucky && effects.lucky > 8) {
+      achievement = "Achievement: โชคดีสุดๆ! 🍀";
+    } else if (effects.knowledge && effects.knowledge > 8) {
+      achievement = "Achievement: ปราชญ์น้อย! 📚";
+    } else if (effects.health && effects.health > 8) {
+      achievement = "Achievement: สุขภาพแข็งแรง! 💪";
+    } else if (effects.relationship && effects.relationship > 8) {
+      achievement = "Achievement: นักสร้างมิตรภาพ! 👫";
     }
-    // Add more achievement conditions as needed
 
     // Show the result popup
     setCurrentResult({ text: resultText, achievement });
     setShowResult(true);
 
-    // Update status after popup is closed
-    if (newStatus.health <= 0) {
-      setDeathReason(`Died from bad health after choosing "${choiceText}".`);
+    // Check for death conditions
+    if (newStatus.happiness <= 0) {
+      setDeathReason(`เสียชีวิตเพราะความทุกข์ล้นพ้นหลังจากเลือกที่จะ "${choiceText}"`);
       return;
     }
-    if (newStatus.money < -5000) {
-      setDeathReason("Died in poverty with massive debt.");
+    if (newStatus.health <= 0) {
+      setDeathReason("เสียชีวิตเพราะสุขภาพย่ำแย่");
       return;
     }
     if (newStatus.lucky <= 0) {
-      setDeathReason("Died due to extreme bad luck.");
-      return;
-    }
-    if (ageIndex >= events.length - 1) {
-      setDeathReason("Died of old age.");
+      setDeathReason("เสียชีวิตเพราะโชคร้ายอย่างหนัก");
       return;
     }
 
     setStatus(newStatus);
+  };
+
+  const handlePurchase = (item) => {
+    if (!item) {
+      setIsShopOpen(false);
+      return;
+    }
+
+    if (status.money >= item.price) {
+      setStatus({
+        happiness: 100,
+        money: 9999,
+        iq: 100,
+        lucky: 100,
+      });
+    } else {
+      alert("เงินไม่พอ! 😭");
+    }
   };
 
   const handleResultClose = () => {
@@ -86,6 +135,19 @@ export default function GamePage() {
     setTimeout(() => {
       setAgeIndex(ageIndex + 1);
     }, 200);
+  };
+
+  const handleRestart = () => {
+    setCharacter(null);
+    setAgeIndex(0);
+    setStatus({
+      health: 100,
+      happiness: 50,
+      money: 1000.0,
+      iq: 150,
+      lucky: 50,
+    });
+    setDeathReason("");
   };
 
   if (!character) {
@@ -187,6 +249,9 @@ export default function GamePage() {
     }
   };
 
+  // Check if health is less than or equal to 0
+  const isGameOver = status.health <= 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white overflow-hidden">
       <AnimatePresence mode="wait">
@@ -217,7 +282,7 @@ export default function GamePage() {
                 animate="pulse"
                 className="text-2xl font-semibold text-yellow-300 mt-2"
               >
-                Age: {currentAge}
+                อายุ: {currentAge} ปี
               </motion.p>
             </motion.div>
 
@@ -262,7 +327,7 @@ export default function GamePage() {
                       transition: { duration: 0.2 }
                     }}
                   >
-                    {events[ageIndex]?.question || deathReason}
+                    {deathReason || (currentEvent && currentEvent.question) || "กำลังโหลด..."}
                   </motion.p>
                 </motion.div>
               </motion.div>
@@ -270,14 +335,9 @@ export default function GamePage() {
 
             {/* Choices Section */}
             <AnimatePresence mode="wait">
-              {!deathReason && (
-                <motion.div
-                  className="space-y-3"
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  {selectedChoices.map((choice, index) => (
+              {!deathReason && currentChoices.length > 0 && (
+                <motion.div className="space-y-3">
+                  {currentChoices.map((choice, index) => (
                     <motion.button
                       key={index}
                       custom={index}
@@ -294,37 +354,68 @@ export default function GamePage() {
               )}
             </AnimatePresence>
 
-            {/* Status Button */}
-            <motion.button
+            {/* Status and Shop Buttons */}
+            <motion.div
+              className="flex gap-4 mt-6"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{
-                scale: 1.03,
-                y: -2,
-                transition: { type: "spring", stiffness: 400 }
-              }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => setIsStatusOpen(true)}
-              className="w-full mt-6 p-4 bg-gray-700 hover:bg-gray-600 rounded-lg shadow-lg transition-all duration-200"
             >
-              📊 Show Status
-            </motion.button>
+              <motion.button
+                whileHover={{
+                  scale: 1.03,
+                  y: -2,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setIsStatusOpen(true)}
+                className="flex-1 p-4 bg-gray-700 hover:bg-gray-600 rounded-lg shadow-lg transition-all duration-200"
+              >
+                📊 แสดงสถานะ
+              </motion.button>
+
+              <motion.button
+                whileHover={{
+                  scale: 1.03,
+                  y: -2,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setIsShopOpen(true)}
+                className="flex-1 p-4 bg-green-600 hover:bg-green-700 rounded-lg shadow-lg text-lg transition-all duration-200"
+              >
+                🛍️ เปิดร้าน
+              </motion.button>
+            </motion.div>
           </div>
         </motion.div>
       </AnimatePresence>
+
+      {isShopOpen && <Shop onPurchase={handlePurchase} />}
 
       {/* Status Panel and Result Popup */}
       <StatusPanel
         isOpen={isStatusOpen}
         onClose={() => setIsStatusOpen(false)}
-        status={status}
+        name={ character.name}
+        sex={character.sex}
+        status={{
+          health: status.health,
+          happiness: status.happiness,
+          money: status.money,
+          iq: status.iq,
+          lucky: status.lucky,
+        }}
       />
+
       <ResultPopup
         isOpen={showResult}
         onClose={handleResultClose}
         result={currentResult.text}
         achievement={currentResult.achievement}
       />
+
+      {/* Render GameOver component if health is <= 0 */}
+      {isGameOver && <GameOver isOpen={isGameOver} onRestart={handleRestart} />}
     </div>
   );
 }

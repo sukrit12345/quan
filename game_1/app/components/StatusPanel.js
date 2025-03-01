@@ -1,55 +1,273 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function StatusPanel({ isOpen, onClose, status }) {
+const getStatusColor = (key, value) => {
+  switch (key) {
+    case "health":
+      return value > 75 ? "bg-gradient-to-r from-green-500 to-green-400" :
+        value > 50 ? "bg-gradient-to-r from-green-400 to-green-300" :
+          value > 25 ? "bg-gradient-to-r from-yellow-400 to-green-300" :
+            "bg-gradient-to-r from-red-500 to-red-400";
+    case "happiness":
+      return value > 75 ? "bg-gradient-to-r from-yellow-300 to-yellow-400" :
+        value > 50 ? "bg-gradient-to-r from-yellow-200 to-yellow-300" :
+          value > 25 ? "bg-gradient-to-r from-gray-400 to-yellow-200" :
+            "bg-gradient-to-r from-gray-500 to-gray-400";
+    case "iq":
+      return value > 140 ? "bg-gradient-to-r from-purple-500 to-indigo-500" :
+        value >= 120 ? "bg-gradient-to-r from-purple-400 to-indigo-400" :
+          value >= 110 ? "bg-gradient-to-r from-purple-300 to-indigo-300" :
+            value >= 90 ? "bg-gradient-to-r from-gray-400 to-purple-200" :
+              value >= 80 ? "bg-gradient-to-r from-yellow-400 to-orange-300" :
+                "bg-gradient-to-r from-red-500 to-red-400";
+    case "lucky":
+      return value > 75 ? "bg-gradient-to-r from-blue-500 to-cyan-400" :
+        value > 50 ? "bg-gradient-to-r from-blue-400 to-cyan-300" :
+          value > 25 ? "bg-gradient-to-r from-gray-400 to-blue-300" :
+            "bg-gradient-to-r from-gray-500 to-gray-400";
+    case "money":
+      return value > 1000 ? "bg-gradient-to-r from-green-500 to-emerald-400" :
+        value > 500 ? "bg-gradient-to-r from-green-400 to-emerald-300" :
+          value > 200 ? "bg-gradient-to-r from-gray-400 to-green-300" :
+            "bg-gradient-to-r from-red-400 to-red-300";
+    default:
+      return "bg-gradient-to-r from-gray-400 to-gray-300";
+  }
+};
+
+const formatValue = (key, value) => {
+  if (key === "health") return `${value}%`;
+  if (key === "happiness") return `${value}%`;
+  if (key === "money") return `฿${value.toLocaleString()}`;
+  if (key === "iq") return `${value}`;
+  if (key === "lucky") return `${value}%`;
+  return value;
+};
+
+// Thai translations for labels
+const thaiLabels = {
+  health: "สุขภาพ",
+  happiness: "ความสุข",
+  money: "เงิน",
+  iq: "ไอคิว",
+  lucky: "โชค"
+};
+
+// Icons for each status
+const getStatusIcon = (key) => {
+  switch (key) {
+    case "health":
+      return "❤️";
+    case "happiness":
+      return "😊";
+    case "iq":
+      return "🧠";
+    case "lucky":
+      return "🍀";
+    case "money":
+      return "💰";
+    default:
+      return "📊";
+  }
+};
+
+// Status Panel Component
+export default function StatusPanel({ isOpen, onClose, status, name, sex }) {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 50 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        type: "spring",
+        stiffness: 300,
+        damping: 20
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      y: 20,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  const barVariants = {
+    hidden: { width: 0, opacity: 0 },
+    visible: (custom) => {
+      const { value, key } = custom; // Destructure value and key from custom
+      let maxValue;
+
+      // Set max value based on the key
+      switch (key) {
+        case "health":
+        case "happiness":
+        case "lucky":
+          maxValue = 100; 
+          break;
+        case "iq":
+          maxValue = 200; 
+          break;
+        default:
+          maxValue = 100; // Default max value
+      }
+
+      // Calculate width percentage
+      const widthPercentage = (value / maxValue) * 100;
+      return {
+        width: `${Math.min(widthPercentage, 100)}%`, // Ensure width doesn't exceed 100%
+        opacity: 1,
+        transition: {
+          delay: 0.2,
+          duration: 0.6,
+          type: "spring",
+          stiffness: 200
+        }
+      };
+    }
+  };
+
+  // Filter out money from regular stats
+  const regularStats = Object.entries(status).filter(([key]) => key !== "money");
+  const moneyStats = Object.entries(status).filter(([key]) => key === "money");
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          exit={{ opacity: 0, scale: 0.9 }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 p-4 z-50"
         >
-          <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold text-gray-300 mb-3">📊 Life Status</h2>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700"
+          >
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="text-xl font-bold text-white flex items-center gap-2 mb-6"
+            >
+              <motion.span
+                animate={{
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.3,
+                  ease: "easeInOut"
+                }}
+              >
+                📊
+              </motion.span>
+              <div>
+                <div>{name}</div>
+                <div className="text-sm text-gray-400">เพศ: {sex === "male" ? "ชาย" : "หญิง"}</div>
+              </div>
+            </motion.div>
 
-            {Object.entries(status).map(([key, value]) => (
-              <div key={key} className="mb-3">
-                <div className="flex justify-between text-sm text-gray-400">
-                  <span className="capitalize">{key}</span>
-                  <span>{value}</span>
+            {/* Regular Status Bars */}
+            {regularStats.map(([key, value], index) => (
+              <motion.div
+                key={key}
+                className="mb-5"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.4 }}
+              >
+                <div className="flex justify-between text-sm text-gray-300 mb-1">
+                  <div className="flex items-center">
+                    <motion.span
+                      className="mr-2 text-xl"
+                      whileHover={{ scale: 1.2, rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {getStatusIcon(key)}
+                    </motion.span>
+                    <span className="capitalize font-medium">{thaiLabels[key] || key}</span>
+                  </div>
+                  <span className="font-semibold">{formatValue(key, value)}</span>
                 </div>
-                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }} 
-                    animate={{ width: `${Math.min(value, 100)}%` }}
+                <div className="w-full h-5 bg-gray-800 rounded-full overflow-hidden shadow-inner border border-gray-700 relative">
+                  <motion.div
+                    custom={{ value, key }}
+                    variants={barVariants}
+                    initial="hidden"
+                    animate="visible"
                     className={`h-full rounded-full ${getStatusColor(key, value)}`}
                   />
                 </div>
-              </div>
+              </motion.div>
+            ))}
+
+            {/* Divider */}
+            <motion.div
+              className="border-t border-gray-700 my-6"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ delay: 0.4, duration: 0.3 }}
+            />
+
+            {/* Money Section */}
+            {moneyStats.map(([key, value], index) => (
+              <motion.div
+                key={key}
+                className="mb-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <motion.span
+                      className="text-3xl mr-2"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        rotate: [0, 5, -5, 0]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "loop"
+                      }}
+                    >
+                      {getStatusIcon(key)}
+                    </motion.span>
+                    <span className="text-2xl font-extrabold text-white">{thaiLabels[key] || key}</span>
+                  </div>
+                  <span className="text-2xl font-extrabold text-yellow-400 drop-shadow-lg">
+                    {formatValue(key, value)}
+                  </span>
+                </div>
+              </motion.div>
             ))}
 
             {/* Close Button */}
-            <button
+            <motion.button
               onClick={onClose}
-              className="mt-4 w-full p-2 bg-red-500 hover:bg-red-600 rounded-md"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.3 }}
+              className="mt-6 w-full py-3 text-lg font-semibold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-lg shadow-lg transition text-white"
             >
-              Close
-            </button>
-          </div>
+              ปิด
+            </motion.button>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
-
-// Function to determine progress bar color
-const getStatusColor = (key, value) => {
-  if (key === "health") return value > 50 ? "bg-green-400" : "bg-red-500";
-  if (key === "happiness") return value > 50 ? "bg-yellow-300" : "bg-gray-400";
-  if (key === "money") return value > 500 ? "bg-green-500" : "bg-red-400";
-  if (key === "lucky") return value > 50 ? "bg-blue-400" : "bg-gray-500";
-  return "bg-blue-300";
-};
