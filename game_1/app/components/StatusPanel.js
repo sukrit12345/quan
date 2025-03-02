@@ -25,10 +25,9 @@ const getStatusColor = (key, value) => {
         value > 50 ? "bg-gradient-to-r from-blue-400 to-cyan-300" :
           value > 25 ? "bg-gradient-to-r from-gray-400 to-blue-300" :
             "bg-gradient-to-r from-gray-500 to-gray-400";
-    case "money":
-      return value > 1000 ? "bg-gradient-to-r from-green-500 to-emerald-400" :
-        value > 500 ? "bg-gradient-to-r from-green-400 to-emerald-300" :
-          value > 200 ? "bg-gradient-to-r from-gray-400 to-green-300" :
+    case "wealth":
+      return value > 80 ? "bg-gradient-to-r from-green-500 to-emerald-400" :
+        value > 25 ? "bg-gradient-to-r from-green-400 to-emerald-300" :
             "bg-gradient-to-r from-red-400 to-red-300";
     default:
       return "bg-gradient-to-r from-gray-400 to-gray-300";
@@ -38,7 +37,7 @@ const getStatusColor = (key, value) => {
 const formatValue = (key, value) => {
   if (key === "health") return `${value}%`;
   if (key === "happiness") return `${value}%`;
-  if (key === "money") return `฿${value.toLocaleString()}`;
+  if (key === "wealth") return `${value}%`;
   if (key === "iq") return `${value}`;
   if (key === "lucky") return `${value}%`;
   return value;
@@ -48,7 +47,7 @@ const formatValue = (key, value) => {
 const thaiLabels = {
   health: "สุขภาพ",
   happiness: "ความสุข",
-  money: "เงิน",
+  wealth: "ความมั่งคั่ง",
   iq: "ไอคิว",
   lucky: "โชค"
 };
@@ -64,7 +63,7 @@ const getStatusIcon = (key) => {
       return "🧠";
     case "lucky":
       return "🍀";
-    case "money":
+    case "wealth":
       return "💰";
     default:
       return "📊";
@@ -106,6 +105,7 @@ export default function StatusPanel({ isOpen, onClose, status, name, sex }) {
         case "health":
         case "happiness":
         case "lucky":
+        case "wealth":
           maxValue = 100; 
           break;
         case "iq":
@@ -130,9 +130,8 @@ export default function StatusPanel({ isOpen, onClose, status, name, sex }) {
     }
   };
 
-  // Filter out money from regular stats
-  const regularStats = Object.entries(status).filter(([key]) => key !== "money");
-  const moneyStats = Object.entries(status).filter(([key]) => key === "money");
+  // Convert status object to an array of key-value pairs
+  const regularStats = Object.entries(status);
 
   return (
     <AnimatePresence>
@@ -207,48 +206,6 @@ export default function StatusPanel({ isOpen, onClose, status, name, sex }) {
                     animate="visible"
                     className={`h-full rounded-full ${getStatusColor(key, value)}`}
                   />
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Divider */}
-            <motion.div
-              className="border-t border-gray-700 my-6"
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.3 }}
-            />
-
-            {/* Money Section */}
-            {moneyStats.map(([key, value], index) => (
-              <motion.div
-                key={key}
-                className="mb-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-              >
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center">
-                    <motion.span
-                      className="text-3xl mr-2"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, -5, 0]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatType: "loop"
-                      }}
-                    >
-                      {getStatusIcon(key)}
-                    </motion.span>
-                    <span className="text-2xl font-extrabold text-white">{thaiLabels[key] || key}</span>
-                  </div>
-                  <span className="text-2xl font-extrabold text-yellow-400 drop-shadow-lg">
-                    {formatValue(key, value)}
-                  </span>
                 </div>
               </motion.div>
             ))}

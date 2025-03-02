@@ -2,18 +2,27 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import CharacterPreview from "./CharacterPreview";
+import thainames from "../lib/thainames";
 
 export default function CharacterCreation({ onStartGame }) {
   const [character, setCharacter] = useState({
     name: "",
     sex: "male",
-    skinTone: "#FFD1DC",
+    skinTone: "#F5CBA7",
     shirtColor: "#FFB6C1",
     glasses: false,
   });
 
   const handleChange = (e) => {
-    setCharacter({ ...character, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Only accept letters
+    if (name === "name" && !/^[a-zA-Zก-๙\s]*$/.test(value)) return;
+    // Update state only if value is not empty
+    if (name === "name" && value.trim() === "") {
+      alert("กรุณาตั้งชื่อตัวละคร!");
+      return;
+    }
+    setCharacter({ ...character, [name]: value });
   };
 
   const toggleGlasses = () => {
@@ -21,8 +30,14 @@ export default function CharacterCreation({ onStartGame }) {
   };
 
   const handleStartGame = () => {
-    if (!character.name.trim()) return alert("กรุณากรอกชื่อของคุณ!");
+    if (!character.name.trim()) return alert("กรุณาตั้งชื่อตัวละคร!");
     onStartGame(character);
+  };
+
+  const randomizeName = () => {
+    const names = thainames[character.sex];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    setCharacter({ ...character, name: randomName });
   };
 
   const containerVariants = {
@@ -31,147 +46,200 @@ export default function CharacterCreation({ onStartGame }) {
   };
 
   const buttonVariants = {
-    hover: { scale: 1.02 },
-    tap: { scale: 0.98 },
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 },
   };
 
+  const genderButtonVariants = {
+    initial: { y: 0 },
+    hover: { y: -2, boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" },
+    tap: { y: 1, boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)", scale: 0.98 },
+  };
+
+  const skinTones = ["#FFD1DC", "#F5CBA7", "#E6B8A2", "#D2B48C"];
+  const shirtColors = ["#FFB6C1", "#90EE90", "#87CEEB", "#DDA0DD"];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-4">
+    <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 p-0">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-2xl"
+        className="w-full h-full max-w-md mx-auto bg-gray-800 flex flex-col"
       >
-        <div className="p-4 space-y-4">
-          {/* Header */}
-          <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 text-center">
+        <div className="bg-indigo-900 py-4">
+          <h1 className="text-2xl font-bold text-blue-300 text-center">
             สร้างตัวละครของคุณ
           </h1>
+        </div>
 
-          {/* Character Preview */}
-          <motion.div
-            animate={{ scale: [0.98, 1.02, 0.98] }}
-            transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-            className="flex justify-center py-2"
-          >
-            <div className="w-32">
+        <div className="flex-1 flex flex-col px-4 py-2">
+          <div className="flex-1 flex items-center justify-center">
+            <motion.div
+              animate={{ scale: [0.98, 1.02, 0.98] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              className="w-32"
+            >
               <CharacterPreview character={character} />
-            </div>
-          </motion.div>
-
-          {/* Name Input */}
-          <div className="relative">
-            <input
-              type="text"
-              name="name"
-              placeholder="กรอกชื่อของคุณ"
-              value={character.name}
-              onChange={handleChange}
-              className="w-full py-2 px-3 text-base text-black rounded-lg border-2 border-gray-600 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/50 text-center bg-white/90 placeholder-gray-500"
-            />
+            </motion.div>
           </div>
 
-          {/* Gender Selection */}
-          <div className="flex gap-2 justify-center">
-            {[
-              { key: "male", label: "ชาย" },
-              { key: "female", label: "หญิง" },
-            ].map(({ key, label }) => (
+          <div className="space-y-3 mb-4">
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                name="name"
+                placeholder="กรุณาตั้งชื่อตัวละคร!"
+                value={character.name}
+                onChange={handleChange}
+                className="flex-1 py-3 px-4 text-lg text-gray-800 rounded-lg border border-gray-300 focus:border-blue-400 focus:outline-none text-center bg-gray-100"
+              />
               <motion.button
-                key={key}
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                onClick={() => setCharacter({ ...character, sex: key })}
-                className={`flex-1 py-2 px-4 text-base font-semibold rounded-lg transition-all ${
-                  character.sex === key
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
+                onClick={randomizeName}
+                className="bg-gray-700 text-white p-3 rounded-lg flex items-center justify-center"
+              >
+                <motion.span 
+                  role="img" 
+                  aria-label="Random"
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 0.5, repeat: 0, repeatDelay: 2 }}
+                >
+                  🎲
+                </motion.span>
+              </motion.button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <motion.button
+                variants={genderButtonVariants}
+                initial="initial"
+                whileHover="hover"
+                whileTap="tap"
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                onClick={() => setCharacter({ ...character, sex: "male" })}
+                className={`py-3 text-base font-semibold rounded-lg transition-all ${
+                  character.sex === "male"
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
                     : "bg-gray-700 text-gray-300 hover:bg-gray-600"
                 }`}
               >
-                {label}
+                <span role="img" aria-label="Male">👨</span> ชาย
               </motion.button>
-            ))}
-          </div>
+              <motion.button
+                variants={genderButtonVariants}
+                initial="initial"
+                whileHover="hover"
+                whileTap="tap"
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                onClick={() => setCharacter({ ...character, sex: "female" })}
+                className={`py-3 text-base font-semibold rounded-lg transition-all ${
+                  character.sex === "female"
+                    ? "bg-gradient-to-r from-pink-500 to-pink-600 text-white"
+                    : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                }`}
+              >
+                <span role="img" aria-label="Female">👩</span> หญิง
+              </motion.button>
+            </div>
 
-          {/* Color Selection Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {/* Skin Tone Selection */}
-            <div className="space-y-2">
-              <label className="block text-base font-medium text-gray-200">
-                สีผิว
-              </label>
-              <div className="flex justify-center gap-2">
-                {["#FFD1DC", "#F5CBA7", "#E6B8A2", "#D2B48C"].map((color) => (
-                  <motion.button
-                    key={color}
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => setCharacter({ ...character, skinTone: color })}
-                    className={`w-8 h-8 rounded-full border-2 transition-all ${
-                      character.skinTone === color
-                        ? "border-white shadow-lg scale-110"
-                        : "border-gray-600 hover:border-gray-400"
-                    }`}
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
+            <div className="grid grid-cols-2 gap-x-2 gap-y-3">
+              <div>
+                <label className="flex items-center gap-1 mb-1 text-purple-300">
+                  <span role="img" aria-label="Skin">👤</span> สีผิว
+                </label>
+                <div className="flex justify-start gap-2">
+                  {skinTones.map((color) => (
+                    <motion.button
+                      key={color}
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onClick={() => setCharacter({ ...character, skinTone: color })}
+                      className={`w-8 h-8 rounded-full transition-all ${
+                        character.skinTone === color
+                          ? "ring-2 ring-white scale-110"
+                          : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                      aria-label={`Skin tone ${color}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-1 mb-1 text-green-400">
+                  <span role="img" aria-label="Shirt">👕</span> สีเสื้อ
+                </label>
+                <div className="flex justify-start gap-2">
+                  {shirtColors.map((color) => (
+                    <motion.button
+                      key={color}
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onClick={() => setCharacter({ ...character, shirtColor: color })}
+                      className={`w-8 h-8 rounded-full transition-all ${
+                        character.shirtColor === color
+                          ? "ring-2 ring-white scale-110"
+                          : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                      aria-label={`Shirt color ${color}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Shirt Color Selection */}
-            <div className="space-y-2">
-              <label className="block text-base font-medium text-gray-200">
-                สีเสื้อ
-              </label>
-              <div className="flex justify-center gap-2">
-                {["#FFB6C1", "#90EE90", "#87CEEB", "#DDA0DD"].map((color) => (
-                  <motion.button
-                    key={color}
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => setCharacter({ ...character, shirtColor: color })}
-                    className={`w-8 h-8 rounded-full border-2 transition-all ${
-                      character.shirtColor === color
-                        ? "border-white shadow-lg scale-110"
-                        : "border-gray-600 hover:border-gray-400"
-                    }`}
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
-              </div>
-            </div>
+            <motion.button
+              variants={genderButtonVariants}
+              initial="initial"
+              whileHover="hover"
+              whileTap="tap"
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              onClick={toggleGlasses}
+              className={`w-full py-3 rounded-lg font-medium text-base ${
+                character.glasses 
+                  ? "bg-gradient-to-r from-green-500 to-green-600 text-white"
+                  : "bg-gray-700 hover:bg-gray-600 text-gray-200"
+              }`}
+            >
+              <motion.span
+                animate={character.glasses ? { rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] } : {}}
+                transition={{ duration: 0.5 }}
+              >
+                {character.glasses ? "👓 ใส่แว่นแล้ว" : "🕶️ เพิ่มแว่นตา"}
+              </motion.span>
+            </motion.button>
+
+            <motion.button
+              variants={buttonVariants}
+              whileHover={{ 
+                scale: 1.03, 
+                boxShadow: "0 0 15px rgba(99, 102, 241, 0.4)"
+              }}
+              whileTap={{ 
+                scale: 0.97,
+                boxShadow: "0 0 5px rgba(99, 102, 241, 0.4)"
+              }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              onClick={handleStartGame}
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-lg font-bold text-lg text-white shadow-lg"
+            >
+              <motion.span 
+                className="inline-block"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1, repeat: Infinity, repeatDelay: 1 }}
+              >
+                เริ่มต้นการเดินทาง 🚀
+              </motion.span>
+            </motion.button>
           </div>
-
-          {/* Glasses Toggle */}
-          <motion.button
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            onClick={toggleGlasses}
-            className={`w-full py-2 px-4 text-base font-semibold rounded-lg transition-all ${
-              character.glasses
-                ? "bg-gradient-to-r from-green-500 to-green-600"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-          >
-            {character.glasses ? "✅ ใส่แว่นแล้ว" : "🕶️ เพิ่มแว่นตา"}
-          </motion.button>
-
-          {/* Start Game Button */}
-          <motion.button
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            onClick={handleStartGame}
-            className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-lg font-bold text-lg shadow-lg transition-all"
-          >
-            เริ่มต้นการเดินทาง 🚀
-          </motion.button>
         </div>
       </motion.div>
     </div>
