@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ขั้นตอนทำสัญญา1</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
+</head>
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">ยืนยันตัวตน</h3>
+      <div class="progress-bar">
+        <div class="progress-step active">1</div>
+        <div class="progress-step">2</div>
+        <div class="progress-step">3</div>
+        <div class="progress-step">4</div>
+        <div class="progress-step">5</div>
+      </div>
+      
+      <h3>ข้อมูลยืนยันตัวตน</h3>
+
+      <form id="userForm" method="POST" action="/submit">
+        <div class="form-group">
+          <label class="required">เลขบัตรประชาชน</label>
+          <input 
+            type="number" 
+            required 
+            id="idCardNumber" 
+            name="id_card_number"
+            readonly />
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ชื่อ</label>
+              <input 
+                type="text"
+                placeholder="ตัวอย่าง:สมชาย"
+                required 
+                name="first_name" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">นามสกุล</label>
+              <input 
+                type="text"
+                placeholder="ตัวอย่าง:มีจริง" 
+                required 
+                name="last_name" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label class="required">ธนาคาร</label>
+          <select id="bank-select" class="form-select-custom" required name="bank_name">
+            <option value="">เลือกธนาคาร</option>
+            <option value="BBL">กรุงเทพ</option>
+            <option value="KBANK">กสิกรไทย</option>
+            <option value="SCB">ไทยพาณิชย์</option>
+            <option value="KTB">กรุงไทย</option>
+            <option value="BAY">กรุงศรีอยุธยา</option>
+            <option value="GSB">ออมสิน</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label class="required">เลขบัญชี</label>
+          <input
+            type="number"
+            placeholder="ตัวอย่าง:1425678953"
+            required
+            id="accountNumber"
+            name="account_number"
+            oninput="validateAccountNumber()" />
+        </div>
+      
+        <h3>ข้อมูลติดต่อ</h3>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เบอร์โทรศัพท์</label>
+              <input
+                type="number"
+                placeholder="ตัวอย่าง:0874589653"
+                required
+                id="phoneNumber"
+                name="phone_number"
+                oninput="validatePhoneNumber()" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ไอจี</label>
+              <input 
+                type="text"
+                placeholder="ตัวอย่าง:Xx_pi" 
+                required 
+                name="instagram" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เฟสบุ๊ค</label>
+              <input 
+                type="text"
+                placeholder="ตัวอย่าง:plac_tot"
+                required 
+                name="facebook" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ไลน์</label>
+              <input 
+                type="text"
+                placeholder="ตัวอย่าง:pop123" 
+                required 
+                name="line" />
+            </div>
+          </div>
+        </div>
+      
+        <h3>ข้อมูล ณ ที่อยู่ปัจจุบัน</h3>
+        <div class="form-group">
+          <label class="required">ประเภทที่อยู่อาศัย</label>
+          <select id="residenceType" required name="residence_type" onchange="toggleFields()">
+            <option value="">เลือกประเภทที่อยู่อาศัย</option>
+            <option value="หอพัก">หอพัก</option>
+            <option value="ที่พักส่วนตัว">ที่พักส่วนตัว</option>
+          </select>
+        </div>
+      
+        <!-- ส่วนกรอกข้อมูลที่เกี่ยวข้องกับหอพัก -->
+        <div class="row" id="dormitoryFields" style="display:none;">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ชื่อหอ</label>
+              <input type="text" placeholder="ตัวอย่าง:แสงจ้า"  name="dormitory_name" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เลขห้อง</label>
+              <input type="text" placeholder="ตัวอย่าง:105"  name="room_number" />
+            </div>
+          </div>
+        </div>
+      
+        <!-- ส่วนกรอกข้อมูลที่เกี่ยวข้องกับที่พักส่วนตัว -->
+        <div class="row" id="privateFields" style="display:none;">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">บ้านเลขที่</label>
+              <input type="text" placeholder="ตัวอย่าง:44/70"  name="house_number" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">จังหวัด</label>
+              <select id="province-select" required name="province">
+                <option value="">เลือกจังหวัด</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="col">
+            <div class="form-group">
+              <label class="required">อำเภอ/เขต</label>
+              <select id="amphoe" required name="amphoe">
+                <option value="">เลือกอำเภอ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ตำบล/แขวง</label>
+              <select id="district" required name="district">
+                <option value="">เลือกตำบล</option>
+              </select>
+            </div>
+          </div>
+      
+          <div class="col">
+            <div class="form-group">
+              <label class="required">รหัสไปรษณีย์</label>
+              <select id="zipcode" required name="zipcode">
+                <option value="">เลือกรหัสไปรษณีย์</option>
+              </select>
+            </div>
+          </div> 
+        </div>
+      
+        <h3>ข้อมูล ณ สถานศึกษา/ที่ทำงาน</h3>
+      
+        <div class="form-group">
+          <label class="required">อาชีพ</label>
+          <select id="occupation-select" required name="occupation">
+            <option value="">เลือกอาชีพ</option>
+            <option value="นักศึกษา">นักศึกษา</option>
+            <option value="ราชการ">ราชการ</option>
+            <option value="พนักงานเงินเดือน">พนักงานเงินเดือน</option>
+            <option value="ฟรีแลนซ์">ฟรีแลนซ์</option>
+            <option value="ธุรกิจส่วนตัว">ธุรกิจส่วนตัว</option>
+          </select>
+        </div>
+      
+        <!-- ซ่อนตอนเริ่ม -->
+        <div class="form-group" id="workplace-group" style="display: none;">
+          <label class="required">ชื่อสถานที่ทำงาน</label>
+          <input type="text" placeholder="ตัวอย่าง:บริษัทaaaจำกัด"  name="workplace_name" />
+        </div>
+      
+        <div class="form-group" id="university-group" style="display: none;">
+          <label class="required">ชื่อมหาวิทยาลัย</label>
+          <select id="university-select" style="width: 100%;"  name="university_name">
+            <option value="">เลือกมหาวิทยาลัย</option>
+          </select>
+        </div>
+      
+        <h3>ข้อมูลรูปภาพ</h3>
+      
+        <!-- ภาพถ่ายประชาชน -->
+        <div class="form-group">
+          <label class="required">ภาพถ่ายประชาชน</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer2"
+              onclick="document.getElementById('citizen_image').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="citizen_image"
+              accept="image/*"
+              required
+              style="display: none"
+              name="citizen_image"
+            />
+            <img
+              class="preview-image"
+              id="previewImage2"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+
+        <input type="hidden" id="contract-id" name="contract_id">
+
+
+        <div class="button-group">
+          <button type="button" id="btn-cancel" class="btn-submit">ยกเลิก</button>
+          <button type="button" id="btn-save" class="btn-save">เจ้าหน้าที่</button>
+          <button type="submit" id="btn-next" class="btn-back">บันทึก</button>
+        </div>
+      </form>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+
+    <!-- HTML -->
+    <script src="1scripts.js"></script>
+    <script type="module" src="2scripts.js"></script>
+    
+
+
+  </body>
+</html>

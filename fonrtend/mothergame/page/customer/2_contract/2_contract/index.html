@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ขั้นตอนทำสัญญา2</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Select2 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- เพิ่มบรรทัดนี้ -->
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">ประเมิณหลักประกัน</h3>
+      <div class="progress-bar">
+        <div class="progress-step">1</div>
+        <div class="progress-step active">2</div>
+        <div class="progress-step">3</div>
+        <div class="progress-step">4</div>
+        <div class="progress-step">5</div>
+      </div>
+
+      <form id="registrationForm1">
+        <div class="form-group">
+          <label class="required">เลือกอุปกรณ์</label>
+          <select id="device-select" style="width: 100%" required>
+            <option value="">เลือกอุปกรณ์</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="required">เลือกรุ่นอุปกรณ์</label>
+          <select id="device-model" style="width: 100%" required>
+            <option value="">เลือกรุ่นอุปกรณ์</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="required">ความจุ</label>
+          <select id="storage-capacity" required>
+            <option value="">เลือกความจุ</option>
+            <option value="">เลือกความจุ</option>
+            <option value="64GB">64 GB</option>
+            <option value="128GB">128 GB</option>
+            <option value="256GB">256 GB</option>
+            <option value="512GB">512 GB</option>
+            <option value="1TB">1 TB</option>
+            <option value="2TB">2 TB</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="battery-health" class="required">สุขภาพแบตเตอรี่</label>
+          <select id="battery-health" name="battery-health" required>
+            <option value="">เลือกสุขภาพแบตเตอรี่</option>
+            <option value="มากกว่า80">มากกว่า80</option>
+            <option value="น้อยกว่า80">น้อยกว่า80</option>
+          </select>
+        </div>
+
+        <!-- ภาพถ่ายหน้าบัญชี Apple ID -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าบัญชี Apple ID</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer1"
+              onclick="document.getElementById('fileInput1').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput1"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage1"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- ภาพหน้าเกี่ยวกับ เห็นรุ่นอุปกรณ์ -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าเกี่ยวกับ(เห็นรุ่นอุปกรณ์)</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer2"
+              onclick="document.getElementById('fileInput2').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput2"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage2"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- ภาพหน้าสุขภาพแบตเตอรี่ -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าสุขภาพแบตเตอรี่</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer3"
+              onclick="document.getElementById('fileInput3').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput3"
+              accept="image/*"
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage3"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- ภาพหน้าเกี่ยวกับ เห็นความจุอุปกรณ์ -->
+        <div class="form-group">
+          <label class="required">ภาพหน้าเกี่ยวกับ(เห็นความจุอุปกรณ์)</label>
+          <div class="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer4"
+              onclick="document.getElementById('fileInput4').click();"
+            >
+              <div class="upload-icon"><i class="fas fa-plus"></i></div>
+              <div class="upload-text">คลิกเพื่ออัปโหลดภาพ</div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput4"
+              accept="image/*"
+              required
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage4"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <input type="hidden" id="contract-id" name="contract_id" />
+
+        <div class="button-group">
+          <button type="submit" id="btn-cancel" class="btn-submit">
+            ยกเลิก
+          </button>
+          <button type="button" id="btn-save" class="btn-save">
+            เจ้าหน้าที่
+          </button>
+          <button type="button" id="btn-next" class="btn-back">บันทึก</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

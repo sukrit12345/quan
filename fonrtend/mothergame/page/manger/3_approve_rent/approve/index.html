@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>แบบฟอร์มการชำระเงิน</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- รวม Flatpickr CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+
+      <form id="paymentForm" enctype="multipart/form-data">
+        <label for="total">รวมเงินที่ต้องชำระ (บาท)</label>
+        <input type="text" id="total" name="total" readonly />
+      
+        <label for="paymentDate">วันที่ชำระ</label>
+        <input type="text" id="paymentDate" name="paymentDate" readonly />
+      
+        <label for="amount" class="required">เงินที่ชำระ (บาท)</label>
+        <input type="text" id="amount" name="amount" required  readonly/>
+      
+        <label for="bank-name">ชื่อธนาคาร</label>
+        <input type="text" id="bank-name" name="bank_name" readonly />
+      
+        <label for="account-name">ชื่อบัญชี</label>
+        <input type="text" id="account-name" name="account_name" readonly />
+      
+        <label for="account-number">เลขบัญชี</label>
+        <input type="text" id="account-number" name="account_number" readonly />
+      
+        <div class="form-group" id="proof-group">
+          <label class="required">หลักฐานการโอนเงิน</label>
+          <div class="photo-upload" id="photo-upload">
+            <div
+              class="upload-container"
+              id="uploadContainer2"
+              onclick="document.getElementById('fileInput2').click();"
+            >
+              <div class="upload-icon" id="upload-icon">
+                <i class="fas fa-plus"></i>
+              </div>
+              <div class="upload-text" id="upload-text">
+                คลิกเพื่ออัปโหลดภาพ
+              </div>
+            </div>
+            <input
+              type="file"
+              class="file-input"
+              id="fileInput2"
+              name="proofImage"
+              accept="image/*"
+              style="display: none"
+            />
+            <img
+              class="preview-image"
+              id="previewImage2"
+              style="display: none"
+            />
+          </div>
+        </div>
+      
+        <div class="button-group" id="button-group">
+          <button type="button" class="cancel" id="cancel-button">
+            ไม่อนุมัติ
+          </button>
+          <button type="submit" class="confirm" id="submit-button">
+            อนุมัติ
+          </button>
+        </div>
+
+        <input type="hidden" id="contractId" name="contractId" />
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
+    <!-- ภาษาไทย -->
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

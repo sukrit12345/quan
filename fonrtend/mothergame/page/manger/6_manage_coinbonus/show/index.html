@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>จัดการโบนัสเหรียญฟรี</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  </head>
+  <body>
+
+    <div class="button-container">
+      <button class="button" onclick="window.location.href='../add/index.html';">
+        +เพิ่มอุปกรณ์apple
+      </button>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-container">
+        <select id="device-select" class="dropdown">
+          <option value="">เลือกอุปกรณ์</option>
+          <option value="iphone">iPhone</option>
+          <option value="ipad">iPad</option>
+        </select>
+      </div>
+      <div class="search-container">
+        <select id="device-model" class="dropdown">
+          <option value="">รุ่น</option>
+        </select>
+      </div>
+      <div class="search-container">
+        <select id="device-storage" class="dropdown">
+          <option value="">เลือกความจุ</option>
+          <option value="64GB">64 GB</option>
+          <option value="128GB">128 GB</option>
+          <option value="256GB">256 GB</option>
+          <option value="512GB">512 GB</option>
+          <option value="1TB">1 TB</option>
+          <option value="2TB">2 TB</option>
+        </select>
+      </div>
+      <div class="search-container">
+        <select id="battery-health" class="dropdown">
+          <option value="">เลือกสุขภาพแบตเตอรี่</option>
+          <option value="มากกว่า80">มากกว่า80</option>
+          <option value="น้อยกว่า80">น้อยกว่า80</option>
+        </select>
+      </div>
+      <div class="search-container">
+        <select id="province-select" class="dropdown">
+          <option value="">จังหวัด</option>
+        </select>
+      </div>
+      <div class="search-container">
+        <select id="occupation-select" class="dropdown">
+          <option value="">เลือกอาชีพ</option>
+          <option value="ทั้งหมด">ทั้งหมด</option>
+          <option value="นักศึกษา">นักศึกษา</option>
+          <option value="ราชการ">ราชการ</option>
+          <option value="พนักงานเงินเดือน">พนักงานเงินเดือน</option>
+          <option value="ฟรีแลนซ์">ฟรีแลนซ์</option>
+          <option value="ธุรกิจส่วนตัว">ธุรกิจส่วนตัว</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <table id="device-form-table">
+        <thead>
+          <tr>
+            <th>ลำดับ</th>
+            <th>วันที่ทำรายการ</th>
+            <th>ประเภทอุปกรณ์</th>
+            <th>รุ่น</th>
+            <th>ความจุ</th>
+            <th>สุขภาพแบต</th>
+            <th>จังหวัด</th>
+            <th>อาชีพ</th>
+            <th>จำนวนเหรียญฟรีสูงสุด</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ข้อมูลจะแสดงตรงนี้ -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button>ก่อนหน้า</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>ถัดไป</button>
+    </div>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

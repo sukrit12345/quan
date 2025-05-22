@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>อนุมัติสัญญาเช่า</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    
+  </head>
+  <body>
+    <div class="step-wrapper">
+      <div class="step-item">
+        <div class="step-number" onclick="window.location.href='../../1_contract/show/index.html';">
+          1
+        </div>
+        <div class="step-label">ยืนยันตัวตน</div>
+      </div>
+      <div class="step-item " >
+        <div class="step-number " onclick="window.location.href='../../2_contract/show/index.html';">
+          2
+        </div>
+        <div class="step-label">ประเมิณหลักประกัน</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number active" onclick="window.location.href='../../3_contract/show/index.html';">
+          3
+        </div>
+        <div class="step-label">เช่าเกม</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number " onclick="window.location.href='../../4_contract/show/index.html';">
+          4
+        </div>
+        <div class="step-label">ยืนยันหลักประกัน</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number " onclick="window.location.href='../../5_contract/show/index.html';">
+          5
+        </div>
+        <div class="step-label">เอกสารสัญญา</div>
+      </div>
+    </div>
+
+    <div class="search-wrapper">
+      <!-- เลือกวันที่ -->
+      <div class="search-container">
+        <input
+          id="date-select"
+          type="text"
+          class="dropdown"
+          placeholder="เลือกช่วงวันที่"
+        />
+      </div>
+      
+
+      <!-- เลือกเลขบัตรประชาชน -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="id-card-input"
+          class="input-field"
+          placeholder="กรอกเลขบัตรประชาชน"
+        />
+      </div>
+
+      <!-- เลือกชื่อลูกค้า -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="customer-name-input"
+          class="input-field"
+          placeholder="กรอกชื่อหรือนามสกุลลูกค้า"
+        />
+      </div>
+
+      <!-- เลือกจังหวัด -->
+      <div class="search-container">
+        <select id="province-select" class="dropdown">
+          <option value="">จังหวัด</option>
+        </select>
+      </div>
+
+      <!-- เลือกสถานะ -->
+      <div class="search-container">
+        <select id="status-select" class="dropdown">
+          <option value="">เลือกสถานะ</option>
+          <option value="รออนุมัติ">รอนุมัติ</option>
+          <option value="อนุมัติ">อนุมัติ</option>
+          <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
+        </select>
+      </div>
+
+      <!-- เลือกชื่อพนักงาน -->
+      <div class="search-container">
+        <select id="approver-name-select" class="dropdown">
+          <option value="">ทั้งหมด</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <table id="bonus-management-table">
+        <thead>
+          <tr>
+            <th>ลำดับ</th>
+            <th>วันที่</th>
+            <th>เลขบัตรประชาชน</th>
+            <th>ชื่อ</th>
+            <th>นามสกุล</th>
+            <th>จังหวัด</th>
+            <th>สถานะ</th>
+            <th>พนักงาน</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ข้อมูลจะแสดงตรงนี้ -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button>ก่อนหน้า</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>ถัดไป</button>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

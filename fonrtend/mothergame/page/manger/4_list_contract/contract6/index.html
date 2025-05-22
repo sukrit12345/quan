@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <title>ดูสัญญา</title>
+  </head>
+  <body>
+    <!-- ส่วนของข้อมูลสัญญา -->
+    <div class="contract-container">
+      <h3 class="contract-title">สัญญาเช่า</h3>
+      <button
+        type="button"
+        id="btn-export-pdf"
+        style="
+          background-color: #e84143;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        ดาวน์โหลด PDF
+      </button>
+
+      <div class="details-grid" id="contract-print">
+        <!-- รายละเอียดต่างๆ ของสัญญา -->
+
+        <div class="detail-item">
+          <div class="detail-label">สถานะ</div>
+          <div class="contract-status" id="contract-status"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">รหัส</div>
+          <div class="detail-value" id="contract-code"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ประเภทอุปกรณ์ (หลักประกัน)</div>
+          <div class="detail-value" id="device-type"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">รุ่นอุปกรณ์ (หลักประกัน)</div>
+          <div class="detail-value" id="device-model"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">วันที่เริ่มเช่า</div>
+          <div class="detail-value" id="start-date"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ระยะเวลาเช่าทั้งหมด (วัน)</div>
+          <div class="detail-value" id="total-days"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">วันที่ครบกำหนดสัญญา</div>
+          <div class="detail-value" id="end-date"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ค่าเช่าทั้งหมด (บาท)</div>
+          <div class="detail-value" id="total-rent"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ค่าเช่าที่เลยกำหนด (บาท)</div>
+          <div class="detail-value" id="late-rent"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ค่าติดตามทวงหลักประกัน (บาท)</div>
+          <div class="detail-value" id="security-fee"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ค่าใช้จ่ายทางกฎหมาย (บาท)</div>
+          <div class="detail-value" id="legal-fee"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">รวมเงินที่ต้องชำระ (บาท)</div>
+          <div class="detail-value" id="total-payment"></div>
+        </div>
+      </div>
+
+      <!-- ส่วนเอกสารสัญญา -->
+      <h3 class="contract-title">เอกสารสัญญา</h3>
+      <button
+        type="button"
+        id="btn-export-pdf2"
+        style="
+          background-color: #e84143;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        ดาวน์โหลด PDF
+      </button>
+      <div class="contract-box" id="contract-print2">
+        <p class="contract-text"  id="contract-docs">
+          <!-- ข้อมูลเอกสารจะถูกเพิ่มจาก API -->
+        </p>
+      </div>
+
+      <!-- ส่วนหัวของการชำระเงิน -->
+      <div class="header">
+        <h3 class="title">ประวัติการชำระเงินของสัญญานี้</h3>
+      </div>
+
+      <!-- ตารางข้อมูลชำระเงิน -->
+      <div class="contract-table-container">
+        <table class="contract-table" id="payment-table">
+          <thead>
+            <tr>
+              <th>บิล</th>
+              <th>วันที่</th>
+              <th>เงินชำระ</th>
+              <th>สถานะ</th>
+              <th>ดูรายละเอียด</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ข้อมูลจะถูกเพิ่มจาก API -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

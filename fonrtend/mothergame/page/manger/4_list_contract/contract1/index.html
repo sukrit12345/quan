@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ข้อมูลส่วนตัว</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
+</head>
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">ข้อมูลส่วนตัว</h3>
+
+        <button 
+        type="button" 
+        onclick="exportToPDF()" 
+        style="background-color: #E84143; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;"
+        >
+        ดาวน์โหลด PDF
+        </button>
+
+      
+      
+
+      <form id="userForm" method="POST" action="/submit">
+        <h3>ข้อมูลยืนยันตัวตน</h3>
+        <div class="form-group">
+          <label class="required">เลขบัตรประชาชน</label>
+          <input 
+            type="number" 
+            required 
+            id="idCardNumber" 
+            name="id_card_number"
+            readonly />
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ชื่อ</label>
+              <input 
+                type="text"
+                required 
+                id="firstName"
+                name="first_name" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">นามสกุล</label>
+              <input 
+                type="text"
+                required 
+                id="lastName"
+                name="last_name" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label class="required">ธนาคาร</label>
+          <input id="bankName" class="form-select-custom" required name="bank_name">
+        </div>
+      
+        <div class="form-group">
+          <label class="required">เลขบัญชี</label>
+          <input
+            type="number"
+            required
+            id="accountNumber"
+            name="account_number"
+            oninput="validateAccountNumber()" />
+        </div>
+      
+        <h3>ข้อมูลติดต่อ</h3>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เบอร์โทรศัพท์</label>
+              <input
+                type="number"
+                required
+                id="phoneNumber"
+                name="phone_number"
+                oninput="validatePhoneNumber()" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ไอจี</label>
+              <input 
+                type="text"
+                required 
+                id="instagram"
+                name="instagram" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เฟสบุ๊ค</label>
+              <input 
+                type="text"
+                required 
+                id="facebook"
+                name="facebook" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ไลน์</label>
+              <input 
+                type="text"
+                required 
+                id="line"
+                name="line" />
+            </div>
+          </div>
+        </div>
+      
+        <h3>ข้อมูล ณ ที่อยู่ปัจจุบัน</h3>
+        <div class="form-group">
+          <label class="required">ประเภทที่อยู่อาศัย</label>
+          <input id="residenceType" required name="residence_type">
+        </div>
+      
+        <!-- ส่วนกรอกข้อมูลที่เกี่ยวข้องกับหอพัก -->
+        <div class="row" id="dormitoryFields" style="display:none;">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ชื่อหอ</label>
+              <input type="text"  id="dormitoryName" name="dormitory_name" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="required">เลขห้อง</label>
+              <input type="text"  id="roomNumber" name="room_number" />
+            </div>
+          </div>
+        </div>
+      
+        <!-- ส่วนกรอกข้อมูลที่เกี่ยวข้องกับที่พักส่วนตัว -->
+        <div class="row" id="privateFields" style="display:none;">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">บ้านเลขที่</label>
+              <input type="text" placeholder="ตัวอย่าง:44/70" id="houseNumber" name="house_number" />
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">จังหวัด</label>
+              <input id="province" required name="province">
+            </div>
+          </div>
+          
+          <div class="col">
+            <div class="form-group">
+              <label class="required">อำเภอ/เขต</label>
+              <input id="amphoe" required name="amphoe">
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="required">ตำบล/แขวง</label>
+              <input id="district" required name="district">
+            </div>
+          </div>
+      
+          <div class="col">
+            <div class="form-group">
+              <label class="required">รหัสไปรษณีย์</label>
+              <input id="zipcode" required name="zipcode">
+            </div>
+          </div> 
+        </div>
+      
+        <h3>ข้อมูล ณ สถานศึกษา/ที่ทำงาน</h3>
+      
+        <div class="form-group">
+          <label class="required">อาชีพ</label>
+          <input id="occupation" required name="occupation">
+        </div>
+      
+        <!-- ซ่อนตอนเริ่ม -->
+        <div class="form-group" id="workplace-group" style="display: none;">
+          <label class="required">ชื่อสถานที่ทำงาน</label>
+          <input type="text" placeholder="ตัวอย่าง:บริษัทaaaจำกัด" id="workplaceName" name="workplace_name" />
+        </div>
+      
+        <div class="form-group" id="university-group" style="display: none;">
+          <label class="required">ชื่อมหาวิทยาลัย</label>
+          <input id="university" style="width: 100%;" name="university_name">
+        </div>
+      
+        <h3>ข้อมูลรูปภาพ</h3>
+      
+        <!-- ภาพถ่ายประชาชน -->
+        <div class="form-group">
+          <label class="required">ภาพถ่ายประชาชน</label>
+          <div class="photo-upload">
+            <input
+              type="file"
+              class="file-input"
+              id="citizenImage"
+              accept="image/*"
+              required
+              style="display: none"
+              name="citizen_image"
+            />
+            <img
+              class="preview-image"
+              id="previewImage2"
+              style="display: none"
+            />
+          </div>
+        </div>
+      </form>
+      
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+
+    <!-- HTML -->
+    <script  type="module" src="scripts.js"></script>
+    
+    
+
+
+  </body>
+</html>

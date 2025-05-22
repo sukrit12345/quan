@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>สถานะที่ต้องการเปลี่ยน</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h2>สถานะที่ต้องการเปลี่ยน</h2>
+
+    <div class="status-list">
+      <div id="card-pay" class="card pay" onclick="goToSetDatePage()">
+        <span class="icon">⏰</span>
+        <span>นัดวันชำระ</span>
+      </div>
+
+      <div id="card-follow" class="card follow" onclick="goToFollowPage()">
+        <span class="icon">🕵️</span>
+        <span>ส่งผู้ติดตาม</span>
+      </div>
+
+      <div id="card-evict" class="card evict" onclick="goToSeizedPage()">
+        <span class="icon">🚫</span>
+        <span>อายัดหลักประกัน</span>
+      </div>
+
+      <div id="card-blacklist" class="card blacklist" onclick="goToBlacklistPage()">
+        <span class="icon">👤</span>
+        <span>แบล็คลิสต์</span>
+      </div>
+
+      <div id="card-done" class="card done" onclick="goToFullyPaidPage()">
+        <span class="icon">✅</span>
+        <span>ชำระครบ</span>
+      </div>
+
+      <div id="card-history" class="card history" onclick="goToHistoryPage()">
+        <span class="icon">📜</span>
+        <span>ประวัติเปลี่ยนสถานะ </span>
+      </div>
+      
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

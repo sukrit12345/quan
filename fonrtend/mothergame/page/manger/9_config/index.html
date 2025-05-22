@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ข้อมูลบริษัท</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+
+        <form id="config">
+            <label for="company-registration-number" class="required">เลขจดทะเบียนบริษัท</label>
+            <input type="text" id="company-registration-number" name="company_registration_number" required readonly/>
+          
+            <label for="company-name" class="required">ชื่อบริษัท</label>
+            <input type="text" id="company-name" name="company_name" required readonly />
+          
+            <label for="account-name" class="required">ชื่อบัญชี</label>
+            <input type="text" id="account-name" name="account_name" required readonly />
+          
+            <label for="bank-name" class="required">ธนาคาร</label>
+            <input type="text" id="bank-name" name="bank_name" required  readonly/>
+          
+            <label for="accountNumber" class="required">เลขบัญชี</label>
+            <input type="text" id="accountNumber" name="account_number" required readonly />
+          
+            <label for="email" class="required">อีเมล</label>
+            <input type="email" id="email" name="email" required readonly/>
+          
+            <label for="phone_number" class="required">เบอร์โทรศัพท์</label>
+            <input type="tel" id="phone_number" name="phone_number" required readonly />
+          </form>
+          
+    </div>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

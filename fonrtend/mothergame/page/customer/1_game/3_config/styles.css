@@ -1,0 +1,63 @@
+/* ตั้งค่าพื้นฐาน */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ตั้งค่าพื้นหลังและการจัดกึ่งกลาง */
+body {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* กล่องหลัก */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ปุ่ม */
+.btn {
+    width: 250px;
+    height: 100px;
+    padding: 15px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* สีปุ่มแต่ละแบบ */
+.btn-deposit {
+    background: #00A991; /* สีเขียว */
+}
+
+.btn-withdraw {
+    background: #E84143; /* สีแดง */
+}
+
+.btn-history {
+    background: #FFCA43; /* สีเหลือง */
+}
+
+
+/* เอฟเฟกต์ Hover */
+.btn-deposit:hover {
+    background: #008F7A; /* เข้มขึ้น */
+}
+
+.btn-withdraw:hover {
+    background: #D63031; /* เข้มขึ้น */
+}
+
+.btn-history:hover {
+    background: #E5B73D; /* เข้มขึ้น */
+}

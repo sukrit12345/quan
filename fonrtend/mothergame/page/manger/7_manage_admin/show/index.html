@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>จัดการพนักงาน</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  </head>
+  <body>
+
+    
+    <div class="button-container">
+      <button
+        id="addEmployeeButton"
+        class="button"
+        onclick="window.location.href='../add/index.html';"
+      >
+        +เพิ่มพนักงาน
+      </button>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="summary-container">
+        <span id="staff-selection-summary">เลือกชื่อพนักงาน</span>
+      </div>
+      <div class="search-container">
+        <select id="staff-select" class="dropdown">
+          <option value="">เลือกชื่อพนักงาน</option>
+        </select>
+      </div>
+      
+
+      <!-- HTML -->
+      <div class="search-container">
+        <input
+          id="date-select"
+          type="text"
+          class="dropdown"
+          placeholder="เลือกช่วงวันที่"
+        />
+      </div>
+
+      
+
+      
+    </div>
+
+    <canvas id="myChart" width="400" height="50"></canvas>
+
+    <div>
+      <table id="employee-table">
+        <thead>
+          <tr>
+            <th>ลำดับ</th>
+            <th>วันที่ทำรายการ</th>
+            <th>ชื่อ</th>
+            <th>วันเกิด</th>
+            <th>เบอร์โทรศัพท์</th>
+            <th>อีเมล</th>
+            <th>อนุมัติฝากเงินเกม</th>
+            <th>อนุมัติสัญญาเช่า</th>
+            <th>อนุมัติชำระค่าเช่า</th>
+            <th>ติดตามหนี้</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody id="employee-data">
+          <!-- ข้อมูลจะแสดงตรงนี้ -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="pagination-controls">
+      <button id="prev-button">ก่อนหน้า</button>
+      <button class="active" id="page-1">1</button>
+      <button id="page-2">2</button>
+      <button id="page-3">3</button>
+      <button id="next-button">ถัดไป</button>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เพิ่มอุปกรณ์apple</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <label for="payment-date">วันที่ทำรายการ</label>
+        <input type="text" id="payment-date" name="payment-date" />
+
+        <label class="required">เลือกอุปกรณ์</label>
+        <select id="device-select" style="width: 100%" required>
+          <option value="">เลือกอุปกรณ์</option>
+          <option value="iphone">iPhone</option>
+          <option value="ipad">iPad</option>
+        </select>
+
+        <label for="device-model">รุ่น</label>
+        <select id="device-model" name="device-model" required>
+          <option value="">เลือกรุ่น</option>
+        </select>
+        
+        
+        
+        
+
+        <label for="device-storage">ความจุ</label>
+        <select id="device-storage" name="device-storage" required>
+          <option value="">เลือกความจุ</option>
+          <option value="64GB">64 GB</option>
+          <option value="128GB">128 GB</option>
+          <option value="256GB">256 GB</option>
+          <option value="512GB">512 GB</option>
+          <option value="1TB">1 TB</option>
+          <option value="2TB">2 TB</option>
+        </select>
+        
+
+        <label for="battery-health" class="required">สุขภาพแบตเตอรี่</label>
+        <select id="battery-health" name="battery-health" required>
+          <option value="">เลือกสุขภาพแบตเตอรี่</option>
+          <option value="มากกว่า80">มากกว่า80</option>
+          <option value="น้อยกว่า80">น้อยกว่า80</option>
+        </select>
+
+        <label for="province-select" class="required">จังหวัด</label>
+        <select id="province-select" required name="province[]" multiple>
+          <option value="">เลือกจังหวัด</option>
+          <!-- ตัวเลือกจังหวัดจะถูกเพิ่มจาก JS -->
+        </select>
+        
+        
+
+        <label class="required">อาชีพ</label>
+        <select id="occupation-select" required name="occupation">
+          <option value="">เลือกอาชีพ</option>
+          <option value="ทั้งหมด">ทั้งหมด</option>
+          <option value="นักศึกษา">นักศึกษา</option>
+          <option value="ราชการ">ราชการ</option>
+          <option value="พนักงานเงินเดือน">พนักงานเงินเดือน</option>
+          <option value="ฟรีแลนซ์">ฟรีแลนซ์</option>
+          <option value="ธุรกิจส่วนตัว">ธุรกิจส่วนตัว</option>
+        </select>
+
+        <label class="required">จำนวนเหรียญฟรีสูงสุด</label>
+        <select id="max-free-coins" required>
+          <option value="">เลือกจำนวนเหรียญฟรีสูงสุด</option>
+          <option value="500">500 เหรียญ</option>
+          <option value="1000">1000 เหรียญ</option>
+          <option value="1500">1500 เหรียญ</option>
+          <option value="2000">2000 เหรียญ</option>
+          <option value="2500">2500 เหรียญ</option>
+          <option value="3000">3000 เหรียญ</option>
+          <option value="3500">3500 เหรียญ</option>
+          <option value="4000">4000 เหรียญ</option>
+          <option value="4500">4500 เหรียญ</option>
+          <option value="5000">5000 เหรียญ</option>
+          <option value="5500">5500 เหรียญ</option>
+          <option value="6000">6000 เหรียญ</option>
+          <option value="6500">6500 เหรียญ</option>
+          <option value="7000">7000 เหรียญ</option>
+          <option value="7500">7500 เหรียญ</option>
+          <option value="8000">8000 เหรียญ</option>
+          <option value="8500">8500 เหรียญ</option>
+          <option value="9000">9000 เหรียญ</option>
+          <option value="9500">9500 เหรียญ</option>
+          <option value="10000">10000 เหรียญ</option>
+        </select>
+
+        <div class="button-group">
+          <button type="button" id="cancel-btn" class="cancel">ยกเลิก</button>
+          <button type="submit" class="confirm">ยืนยัน</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
+</html>

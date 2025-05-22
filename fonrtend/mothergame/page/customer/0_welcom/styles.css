@@ -1,0 +1,60 @@
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+/* การจัดเรียงเมนูในแนวตั้ง */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* สไตล์สำหรับแต่ละเมนู */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu-item:hover {
+    transform: translateY(-3px);
+}
+
+/* สไตล์สำหรับไอคอนในเมนู */
+.menu-icon {
+    width: 50px;                    /* ความกว้างคงที่ */
+    height: 50px;                   /* ความสูงเท่ากับความกว้าง */
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;             /* ทำให้เป็นวงกลม */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+
+/* สไตล์สำหรับข้อความในเมนู */
+.menu-text {
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* สไตล์สำหรับลูกศรในเมนู */
+.menu-arrow {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* เอฟเฟกต์เมื่อเมนูถูก hover */
+.menu-item:hover {
+    transform: translateY(-3px);
+}
+
