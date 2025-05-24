@@ -33,8 +33,14 @@ app.use('/api', login );
 
 
 
+//ไปหน้าเกม//0_welcom
+const  game = require('./backend/page/customer/0_welcom/welcom');
+app.use('/api', game);
 
 
+//เเสดงเหรีญญ//1_game
+const  showgame = require('./backend/page/customer/1_game/show/show');
+app.use('/api', showgame);
 
 
 
@@ -185,6 +191,7 @@ app.use('/api/admin', adminRouter_post);
 //เเสดง ลบ
 const adminRouter = require('./backend/page/manger/7_manage_admin/show/manage_admin');
 app.use('/api', adminRouter );
+
 
 //9_config ดูข้อมูลบริษัท
 const company = require('./backend/page/manger/9_config/company');

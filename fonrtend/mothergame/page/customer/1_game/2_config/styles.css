@@ -35,29 +35,14 @@ body {
     text-align: center;
 }
 
-/* สีปุ่มแต่ละแบบ */
-.btn-deposit {
-    background: #00A991; /* สีเขียว */
-}
-
-.btn-withdraw {
-    background: #E84143; /* สีแดง */
-}
-
-.btn-history {
-    background: #FFCA43; /* สีเหลือง */
-}
-
+/* สีพื้นฐาน */
+.btn-deposit   { background:#00A991; }   /* เขียว */
+.btn-withdraw  { background:#E84143; }   /* แดง */
+.btn-transfer  { background:#FFCA43; }   /* เหลือง */
+.btn-record    { background:#4A90E2; }   /* ฟ้า */
 
 /* เอฟเฟกต์ Hover */
-.btn-deposit:hover {
-    background: #008F7A; /* เข้มขึ้น */
-}
-
-.btn-withdraw:hover {
-    background: #D63031; /* เข้มขึ้น */
-}
-
-.btn-history:hover {
-    background: #E5B73D; /* เข้มขึ้น */
-}
+.btn-deposit:hover   { background:#008F7A; }
+.btn-withdraw:hover  { background:#D63031; }
+.btn-transfer:hover  { background:#E5B73D; }
+.btn-record:hover    { background:#3A79C4; }  /* ฟ้าเข้มขึ้น */

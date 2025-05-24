@@ -19,7 +19,7 @@
     "jspdf": "^3.0.1",
     "mongoose": "^8.13.2",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts2",
+    "multer":  "^1.4.5",
     "node-cron": "^3.0.3",
     "nodemailer": "^7.0.3",
     "project1": "file:"

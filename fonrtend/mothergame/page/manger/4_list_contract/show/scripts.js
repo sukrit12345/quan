@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       data.forEach((item, index) => {
         const row = document.createElement("tr");
 
-        const statusColor = getStatusColor(item.status);
+        const statusToShow = chooseValidStatus(item.latestStatus, item.status);
+        const statusColorToShow = getStatusColor(statusToShow);
+        
   
         row.innerHTML = `
           <td>${data.length - index}</td>
@@ -27,7 +29,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           <td>${item.end_date ? new Date(item.end_date).toLocaleDateString("th-TH") : "-"}</td>
           <td>${item.total_payment_due?.toLocaleString() || "-"}</td>
           <td>${item.amountPaid?.toLocaleString() || "-"}</td>
-         <td style="color: ${statusColor}; ">${item.status || "-"}</td>
+          <td style="color: ${statusColorToShow};">${statusToShow}</td>
+
           <td>-</td> <!-- manager ไม่มีใน API นี้ -->
           <td>
             <button class="icon-button" onclick="window.open('../contract1/index.html?_id=${item.id}', '_blank')">
@@ -51,8 +54,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
   
 
+//คำนวณสถานะที่ต้องเเเสดง
+function chooseValidStatus(primary, fallback) {
+  if (
+    primary !== null &&
+    primary !== undefined &&
+    primary !== "" &&
+    primary !== "-"
+  ) {
+    return primary;
+  }
+  if (
+    fallback !== null &&
+    fallback !== undefined &&
+    fallback !== "" &&
+    fallback !== "-"
+  ) {
+    return fallback;
+  }
+  return "-";
+}
 
-  //สีสถานะสัญญา
+
+//สีสถานะสัญญา
 function getStatusColor(status) {
     const statusColorMap = {
       อยู่ในสัญญา: "#21266E",
